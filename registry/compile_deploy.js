@@ -33,15 +33,16 @@ module.exports = (solFile) => {
 
   const web3 = new Web3(new Web3.providers.HttpProvider(endpoint));
 
-  const tokenContractsAbi = contractDefinition.abis
-  const tokenContractsBin = contractDefinition.bin
+  const tokenContractsAbi = contractDefinition.abis;
+  const tokenContractsBin = contractDefinition.bin;
 
+  if(!fs.existsSync('./build'))fs.mkdirSync('./build');
   fs.writeFileSync(`./build/${solFile}.bin`, tokenContractsBin , (err) => {
-    if(err) console.log(err)
+    if(err) console.log(err);
   })
 
   fs.writeFileSync(`./build/${solFile}.abi`, tokenContractsAbi , (err) => {
-    if(err) console.log(err)
+    if(err) console.log(err);
   })
 
   console.log(`${solFile}.sol compile complete`)
