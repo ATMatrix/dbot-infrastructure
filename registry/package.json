@@ -1,0 +1,10 @@
+{
+  "name": "RegisterLib",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "solc": "^0.4.17",
+    "web3": "^0.19.1"
+  }
+}
