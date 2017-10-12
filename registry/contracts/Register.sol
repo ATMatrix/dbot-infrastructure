@@ -14,11 +14,12 @@ contract Register {
         owner = msg.sender;
     }
 
-    modifier onlyAdmin() {
-        if(msg.sender == owner) _;
+    modifier onlyOwner() {
+        if(msg.sender != owner) throw;
+        _;
     }
 
-    function register(bytes32 AI_id, address price_addr) onlyAdmin {
+    function register(bytes32 AI_id, address price_addr) onlyOwner {
         ai[AI_id] = price_addr;
         EventRegister(AI_id, price_addr);
     }
@@ -27,18 +28,18 @@ contract Register {
         return ai[AI_id];
     }
 
-    function deleteAI(bytes32 AI_id) onlyAdmin {
+    function deleteAI(bytes32 AI_id) onlyOwner {
         delete ai[AI_id];
         EventDelete(AI_id);
     }
 
-    function set_price_addr(bytes32 AI_id, address price_addr) onlyAdmin {
+    function set_price_addr(bytes32 AI_id, address price_addr) onlyOwner {
         ai[AI_id] = price_addr;
         EventSet(AI_id, price_addr);
     }
 
-    function isRegistered(bytes32 AI_id) onlyAdmin constant returns (bool){
-        if(ai[AI_id] == 0x0000000000000000000000000000000000000000)return false;
+    function isRegistered(bytes32 AI_id) constant returns (bool){
+        if(ai[AI_id] == 0x0)return false;
         return true;
     }
 

@@ -10,13 +10,13 @@ module.exports = class Register {
   initialize(contractAddress) {
     return new Promise(resolve => {
       this.web3 =  new Web3(new Web3.providers.HttpProvider(endpoint));
-
       this.web3.personal.unlockAccount(account.address, account.password);
-
       this.tokenContractsAbi = fs.readFileSync('./build/Register.abi');
       const contract = this.web3.eth.contract(JSON.parse(this.tokenContractsAbi));
       this.token = contract.at(contractAddress);
+
       this.account = account.address;
+
       this.eventRegister = this.token.EventRegister();
       this.eventDelete = this.token.EventDelete();
       this.eventSet = this.token.EventSet();
@@ -27,6 +27,7 @@ module.exports = class Register {
   }
 
   registerAI(AI_Id, address) {
+
     return new Promise(resolve => {
       this.token.register(AI_Id, address, {from: this.account, gas: cost.gas || 900000});
       console.log("Register AI ...");
