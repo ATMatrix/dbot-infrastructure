@@ -40,17 +40,17 @@ contract IntervalCharge is Charge, Ownable {
           }
     }
 
-    function getPrice(uint, address from) onlyOwner returns (uint) {
-        return isFree(from) ? 0 : amount;
+    function getPrice(uint, address _from) onlyOwner returns (uint) {
+        return isFree(_from) ? 0 : amount;
     }
 
-    function isFree(address from) onlyOwner private returns (bool) {
-        Token storage token = tokens[from];
+    function isFree(address _from) onlyOwner private returns (bool) {
+        Token storage token = tokens[_from];
         return now > token.end ? false : true;
     }
 
-    function resetToken(address from) {
-          tokens[from] = Token({
+    function resetToken(address _from) onlyOwner {
+          tokens[_from] = Token({
               start: now,
               end : now + daysAfter * 1 days            
         }); 

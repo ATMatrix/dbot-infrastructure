@@ -9,12 +9,12 @@ contract TimesCharge is Charge, Ownable {
       uint256 callTimes;
     }
 
-    uint256 public amount;
-    uint256 public freeTimes;
+    uint256 amount;
+    uint256 freeTimes;
 
-    mapping (address => Token) public tokens;
+    mapping (address => Token) tokens;
 
-    function TimesCharge(uint256 _amount, uint256 _freeTimes) {
+    function TimesCharge(uint256 _amount, uint256 _freeTimes) onlyOwner {
         amount = _amount;
         freeTimes = _freeTimes;
     }

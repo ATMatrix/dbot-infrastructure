@@ -8,15 +8,14 @@ import "./billing/BillingBasic.sol";
 contract Proxy is Ownable, Util {
 
     // event Forwarded(address indexed destination, uint value, bytes data);
-    AIRegister private AIREGISTER;
-    BillingBasic private bill;
+    address private aiRegister;
+    address private bill;
     uint callID = 1000;
 
     event NewCallAI(string indexed aiNameEn, uint call_id, uint ai_type);
 
-    function Proxy(address _owner, address _register) {
-        owner = _owner;
-        AIREGISTER = new AIRegister(_register);
+    function Proxy(address _register) {
+        aiRegister = _register;
     }
 
 
@@ -27,14 +26,14 @@ contract Proxy is Ownable, Util {
     //     Forwarded(destination, value, data);
     // }
 
-    function callAI(string aiNameEn) payable returns (uint) {
+    function callAI(string aiNameEn) returns (uint) {
         callID = getCallID();
-        AI ai = AI(AIREGISTER.getAI(aiNameEn));
-        require(isContract(ai.getBillingContract()));
-        bill = BillingBasic(ai.getBillingContract());
-        bill.billling(callID, msg.sender, 1000);
-        NewCallAI(aiNameEn, callID, ai.getAIType());
-        bill.takeFee(callID);
+        AI ai = AI((AIRegister(aiRegister)).getAI(aiNameEn));
+        require(isContract( ai.billingContract() ));
+        bill =  ai.billingContract();
+        BillingBasic(bill).billing(callID, msg.sender, 1000);
+        NewCallAI(aiNameEn, callID, ai.aiType());
+        BillingBasic(bill).takeFee(callID);
     }
 
     function getCallID() returns (uint) {

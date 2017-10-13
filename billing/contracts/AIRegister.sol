@@ -52,14 +52,6 @@ contract AI {
       dbotIP = _dbotIP;
   }
 
-  function getBillingContract() public returns (address) {
-      return billingContract;
-  }
-
-  function getAIType() public returns (uint) {
-      return aiType;
-  }
-
 }
 
 contract AIRegister is Ownable, Util {
@@ -73,7 +65,7 @@ contract AIRegister is Ownable, Util {
       ais.length = 1;
   }
 
-  function register(string aiNameEn, AI ai) onlyOwner internal {
+  function register(string aiNameEn, AI ai) onlyOwner {
       uint aiID = ais.length;
       ainameToIDMap[b32(aiNameEn)] = aiID;
       ais.push(ai);
@@ -83,17 +75,5 @@ contract AIRegister is Ownable, Util {
       uint aiID = ainameToIDMap[b32(aiNameEn)];
       return ais[aiID];
   }
-
-//   function unregister(uint aiId) onlyOwner internal {
-      
-//   }
-
-//   function isRegistered(uint aiId) internal {
-
-//   }
-
-//   function changeContrcatAddress(uint aiId, AI ai) onlyOwner internal {
-
-//   }
 
 }
