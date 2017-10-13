@@ -7,6 +7,7 @@ These includes:
 
 - registry
 - proxy
+- billing
 - accounting
 - scheduler
 - worker
