@@ -13,3 +13,9 @@ These includes:
 - worker
 
 etc.
+
+
+Coding Style
+------------
+
+Please follow conventions defined here http://solidity.readthedocs.io/zh/latest/style-guide.html.
