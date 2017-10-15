@@ -5,7 +5,7 @@ Worker of dbot system which monitor request events from a given scheduler, forwa
 cd worker && npm install
 ~~~
 ## Run
-First you need config the worker with information of a scheduler, an account and AI provider in the form defined under the `config/` fold. Then:
+First you need config the worker with information of a scheduler, an account and AI provider in the form defined under the `config/` fold properly. Then:
 ~~~
 node index.js
 ~~~
@@ -13,7 +13,7 @@ node index.js
 After started, this worker monitor a `NewQuestion(string question)` event from the scheduler. It assume the structure of the `question` parameter of `NewQuestion` event to be:
 ~~~javascript
 {
-  method, // String, the image classify method to query. Must be one of `['dishDetect', 'carDetect', 'logoSearch', 'animalDetect', 'plantDetect', 'objectDetect']`
+  method, // String, the image classify method to query. Must be one of ['dishDetect', 'carDetect', 'logoSearch', 'animalDetect', 'plantDetect', 'objectDetect']
   params, // Object, the actually parameters to be send to the AI provider's API
 }
 ~~~
