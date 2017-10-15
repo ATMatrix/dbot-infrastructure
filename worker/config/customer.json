@@ -1,0 +1,14 @@
+{
+  "account": {
+    "address": "0xeae971482a42c0f93f9b579415dedd32794d8f45",
+    "password": "123456"
+  },
+  "AI": {
+    "APP_ID": "",
+    "API_KEY": "",
+    "SECRET_KEY": ""
+  },
+  "cost": {
+    "gas": 90000
+  }
+}
