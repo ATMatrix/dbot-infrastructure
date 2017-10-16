@@ -1,0 +1,34 @@
+{
+  "name": "sol.d",
+  "version": "1.0.2",
+  "description": "An ehtereum contracts deployer built on top of solc.js & web3.js.",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "deploy": "node index.js"
+  },
+  "keywords": [
+    "blokchain",
+    "ethereum",
+    "solidity",
+    "compile",
+    "deploy"
+  ],
+  "author": "Tim",
+  "license": "ISC",
+  "dependencies": {
+    "solc": "^0.4.17",
+    "web3": "^0.19.1"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pplam/sold.git"
+  },
+  "bugs": {
+    "url": "https://github.com/pplam/sold/issues"
+  },
+  "homepage": "https://github.com/pplam/sold#readme"
+}
