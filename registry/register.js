@@ -26,10 +26,10 @@ module.exports = class Register {
 
   }
 
-  registerAI(AI_Id, address) {
+  registerAI(aiName, address) {
 
     return new Promise(resolve => {
-      this.token.register(AI_Id, address, {from: this.account, gas: cost.gas || 900000});
+      this.token.register(aiName, address, {from: this.account, gas: cost.gas || 900000});
       console.log("Register AI ...");
       this.eventRegister.watch((err, res) => {
         if(!err) {
@@ -41,15 +41,15 @@ module.exports = class Register {
     })
   }
 
-  getAIAddr(AI_Id) {
-    this.token.get_price_addr(AI_Id, (err, res) => {
+  getAIAddr(aiName) {
+    this.token.getBillingAddr(aiName, (err, res) => {
       console.log("getAIAddr: ", res);
     });
   }
 
-  setAIAddr(AI_Id, address) {
+  setAIAddr(aiName, address) {
     return new Promise(resolve => {
-      this.token.set_price_addr(AI_Id, address, {from: this.account, gas: cost.gas || 900000});
+      this.token.setBillingAddr(aiName, address, {from: this.account, gas: cost.gas || 900000});
       console.log("Set AI ...");
       this.eventSet.watch((err, res) => {
         if(!err) {
@@ -60,9 +60,9 @@ module.exports = class Register {
    })
   }
 
-  deleteAIByName(AI_Id) {
+  deleteAIByName(aiName) {
     return new Promise(resolve => {
-      this.token.deleteAI(AI_Id, {from: this.account, gas: cost.gas || 900000});
+      this.token.deleteAI(aiName, {from: this.account, gas: cost.gas || 900000});
       console.log("Delete AI ...");
       this.eventDelete.watch((err, res) => {
         if(!err) {
@@ -74,8 +74,8 @@ module.exports = class Register {
     })
   }
 
-  isRegistered(AI_Id) {
-    return this.token.isRegistered(AI_Id);
+  isRegistered(aiName) {
+    return this.token.isRegistered(aiName);
   }
 
 

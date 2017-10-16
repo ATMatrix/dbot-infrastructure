@@ -6,9 +6,9 @@ contract Register {
     address public owner;
     mapping(bytes32 => address) ai;
 
-    event EventRegister(bytes32 AI_id, address price_addr);
-    event EventDelete(bytes32 AI_id);
-    event EventSet(bytes32 AI_id, address price_addr);
+    event EventRegister(bytes32 aiName, address billingAddr);
+    event EventDelete(bytes32 aiName);
+    event EventSet(bytes32 aiName, address billingAddr);
 
     function Register(){
         owner = msg.sender;
@@ -19,27 +19,27 @@ contract Register {
         _;
     }
 
-    function register(bytes32 AI_id, address price_addr) onlyOwner {
-        ai[AI_id] = price_addr;
-        EventRegister(AI_id, price_addr);
+    function register(bytes32 aiName, address billingAddr) onlyOwner {
+        ai[aiName] = billingAddr;
+        EventRegister(aiName, billingAddr);
     }
 
-    function get_price_addr(bytes32 AI_id) constant returns (address) {
-        return ai[AI_id];
+    function getBillingAddr(bytes32 aiName) constant returns (address) {
+        return ai[aiName];
     }
 
-    function deleteAI(bytes32 AI_id) onlyOwner {
-        delete ai[AI_id];
-        EventDelete(AI_id);
+    function deleteAI(bytes32 aiName) onlyOwner {
+        delete ai[aiName];
+        EventDelete(aiName);
     }
 
-    function set_price_addr(bytes32 AI_id, address price_addr) onlyOwner {
-        ai[AI_id] = price_addr;
-        EventSet(AI_id, price_addr);
+    function setBillingAddr(bytes32 aiName, address billingAddr) onlyOwner {
+        ai[aiName] = billingAddr;
+        EventSet(aiName, billingAddr);
     }
 
-    function isRegistered(bytes32 AI_id) constant returns (bool){
-        if(ai[AI_id] == 0x0)return false;
+    function isRegistered(bytes32 aiName) constant returns (bool){
+        if(ai[aiName] == 0x0)return false;
         return true;
     }
 
