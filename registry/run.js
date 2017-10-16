@@ -9,8 +9,10 @@ async function run() {
 
   let contractAddress = "";
   const path = './build/RegisterContractAddress.txt';
+
   if(fs.existsSync(path))
     contractAddress = fs.readFileSync('./build/RegisterContractAddress.txt').toString();
+
   //判断合约是否已被部署，如果没被部署则先部署
   if (contractAddress === "") {
     console.log("Deploy contract now...");
@@ -18,6 +20,7 @@ async function run() {
     contractAddress = fs.readFileSync('./build/RegisterContractAddress.txt').toString();
   }
   else console.log("Contract has been deployed");
+
   console.log("Contract Address: " + contractAddress);
 
   await register.initialize(contractAddress);
