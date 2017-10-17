@@ -19,7 +19,7 @@ module.exports = class Deployer {
   }
 
   compile(srcs, { srcDir = this.srcDir } = {}) {
-    if (srcs.length === 0) return true
+    if (srcs instanceof Array || srcs.length === 0) return false
 
     const sources = srcs
       .reduce((ret, src) => {
@@ -41,16 +41,28 @@ module.exports = class Deployer {
     return true
   }
 
-  deploy(name, {
-    endpoint = this.endpoint,
-    from = this.from,
-    password = this.password,
-    gas = this.gas,
-  } = {}) {
-    if (!name || (typeof name !== 'string')) return
-    const contract = this.abstraction[name]
-
+  deploy(name, args = [], opts = {}) {
     return new Promise((resolve, reject) => {
+      if (!name || (typeof name !== 'string')) {
+        reject('require a contract name')
+      }
+      if (arguments.length >= 3) {
+        !(args instanceof Array && isObject(opts)) {
+          reject('error type of arguments')
+        }
+      } else if (isObject(args)) {
+        opts = args
+        args = []
+      }
+
+      const {
+        endpoint = this.endpoint,
+        from = this.from,
+        password = this.password,
+        gas = this.gas,
+      } = opts
+      const contract = this.abstraction[name]
+
       const provider = new Web3
         .providers
         .HttpProvider(endpoint)
@@ -65,7 +77,7 @@ module.exports = class Deployer {
       web3.personal.unlockAccount(from, password)
 
       web3.eth.contract(contract.interface)
-        .new(options, (err, res) => {
+        .new(...args, options, (err, res) => {
           if (err) reject(err)
 
           const addr = res.address
@@ -76,4 +88,9 @@ module.exports = class Deployer {
         })
     })
   }
+}
+
+function isObject(o) {
+  return typeof o == 'object'
+    && opts.constructor == Object
 }
