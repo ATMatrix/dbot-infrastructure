@@ -8,9 +8,10 @@ import "../charges/Charge.sol";
 import "../charges/FreeCharge.sol";
 import "../charges/TimesCharge.sol";
 import "../charges/IntervalCharge.sol";
+import "../lib/SafeMath.sol";
 
-
-contract DbotBilling is BillingBasic, Ownable, Util {
+contract DbotBilling is BillingBasic, Ownable {
+    using SafeMath for uint256;
 
     enum BillingType {
         Free,
@@ -26,13 +27,23 @@ contract DbotBilling is BillingBasic, Ownable, Util {
         bool isFrezon;
         bool isPaid;
     }
-
+    
     address attToken;
+    address beneficiary;
     address charge;
     BillingType billingType = BillingType.Free;
     uint arg0;
     uint arg1;
+    uint profitTokens = 0;
     mapping(uint => Order) orders; 
+
+    event Billing(uint _callID, uint _gas, address _from);
+    event GetPrice(uint _callID, uint _gas, address _from, uint _price);
+    event LockPrice(uint _callID, uint _gas, address _from, uint _tokens);
+    event TakeFee(uint _callID, uint _gas,address _from, uint _fee);
+    event UnlockToken(uint _callID, uint _gas,address _from, uint _fee);
+    event Allowance(address _from, address _spender, uint _value);
+    event ProfitTokensWithdrawn(address indexed _beneficiary, uint256 _amount);
 
     modifier notCalled(uint _callID) {
       if (orders[_callID].from != 0) 
@@ -46,8 +57,9 @@ contract DbotBilling is BillingBasic, Ownable, Util {
       _;
     }
     
-    function DbotBilling(address _ATT, uint _billingType, uint _arg0, uint _arg1) {
-        attToken = _ATT;
+    function DbotBilling(address _att, address _beneficiary,  uint _billingType, uint _arg0, uint _arg1) {
+        attToken = _att;
+        beneficiary = _beneficiary;
         billingType = BillingType(_billingType);
         arg0 = _arg0;
         arg1 = _arg1;
@@ -58,13 +70,9 @@ contract DbotBilling is BillingBasic, Ownable, Util {
         if ( billingType == BillingType.Free ) {
             charge = new FreeCharge();
         } else if ( billingType == BillingType.Times ) {
-            //arg0:每次消费ATT数量
-            //arg1:免费次数
-            charge = new TimesCharge(arg0, arg1);
+            charge = new TimesCharge(arg0, arg1);               //arg0:每次消费ATT数量  arg1:免费次数
         } else if ( billingType == BillingType.Interval ) {
-            //arg0:每段时间消费ATT数量
-            //arg1:分段类型
-            charge = new IntervalCharge(arg0, arg1);
+            charge = new IntervalCharge(arg0, arg1);            //arg0:每段时间消费ATT数量  arg1:分段类型
         } else if ( billingType == BillingType.Other ) {
             revert();
         } else {
@@ -72,62 +80,72 @@ contract DbotBilling is BillingBasic, Ownable, Util {
         }
     }
 
-    function billing(uint _callID, address _from, uint _tokens)
+    function billing(uint _callID, address _from)
         onlyOwner
         notCalled(_callID)
         public
         returns (bool isSucc) 
     {
-        orders[_callID] = Order({
-            from : _from,
-            tokens : _tokens,
-            fee : 0,
-            isFrezon : false,
-            isPaid : false
-        });
-        uint fee = getPrice(_callID);
-        if (fee == 0) {
-            return true;
-        }
-        orders[_callID].fee = fee;
-        isSucc = lockPrice(_callID);
+        getPrice(_callID, _from);
+        isSucc = lockToken(_callID);
         if (!isSucc)
             revert();
         Billing(_callID, msg.gas, msg.sender);
         return isSucc;
     } 
 
-    function getPrice(uint _callID)
+    function getPrice(uint _callID, address _from)
         onlyOwner
-        called(_callID)
+        notCalled(_callID)
         public
         returns (uint _fee)
     {
-        require(isContract(charge));
+        orders[_callID] = Order({
+            from : _from,
+            tokens : 0,
+            fee : 0,
+            isFrezon : false,
+            isPaid : false
+        });
         Order storage o = orders[_callID];
         _fee = Charge(charge).getPrice(_callID, o.from);
-        require(o.tokens >= _fee);
+        o.fee = _fee;
         GetPrice(_callID, msg.gas, msg.sender, _fee);
     }
 
-    function lockPrice(uint _callID)
+    function lockToken(uint _callID)
         onlyOwner
         called(_callID)
         public
         returns (bool isSucc)
     {
         Order storage o = orders[_callID];
+        require(o.isFrezon == false);
+        require(o.isPaid == false);
         address from = o.from;
-        uint tokens = o.tokens;
-        uint allowance = ERC20(attToken).allowance(from, owner);
-        require(allowance >= tokens);
-        isSucc = ERC20(attToken).transferFrom(from, owner, tokens);
+        uint fee = o.fee;
+        uint tokens = onAllowance(from);
+        Allowance(from, address(this), tokens);
+        require(tokens >= fee);
+        o.tokens = tokens;
+        if ( billingType == BillingType.Interval ) {
+            tokens = fee;
+        }
+        isSucc = ERC20(attToken).transferFrom(from, address(this), tokens);
         if (!isSucc) {
             revert();
         } else {
-            o.isFrezon = true;
+            if ( billingType == BillingType.Interval ) {
+                o.isFrezon = false;
+                o.isPaid = true;
+                profitTokens = profitTokens.add(tokens);
+                TakeFee(_callID, msg.gas, o.from, tokens);
+            } else {
+                o.isFrezon = true;
+            }
+            Charge(charge).resetToken(o.from);
         }
-        LockPrice(_callID, msg.gas, msg.sender);
+        LockPrice(_callID, msg.gas, msg.sender, tokens);
         return isSucc;
     }
 
@@ -138,22 +156,24 @@ contract DbotBilling is BillingBasic, Ownable, Util {
         returns (bool isSucc)
     {
         Order storage o = orders[_callID];
-        if (o.fee == 0) {
-            TakeFee(_callID, o.fee, o.from);
-            return true;
-        }
+        if (billingType == BillingType.Interval) {
+            if (o.isPaid) {
+                return true;
+            } else {
+                return false;
+            }
+        } 
         require(o.isFrezon == true);
         require(o.isPaid == false);
         address from = o.from;
         require(o.tokens >= o.fee);
         uint refund = o.tokens - o.fee;
-        ERC20(attToken).approve(owner, refund);
-        isSucc = ERC20(attToken).transferFrom(owner, from, refund);
+        isSucc = ERC20(attToken).transfer(from, refund);
         if (isSucc) {
             o.isFrezon = false;
             o.isPaid = true;
-            Charge(charge).resetToken(o.from);
-            TakeFee(_callID, o.fee, o.from);
+            profitTokens = profitTokens.add(o.fee);
+            TakeFee(_callID, msg.gas, o.from, o.fee);
         } else {
             revert();
         }
@@ -167,22 +187,51 @@ contract DbotBilling is BillingBasic, Ownable, Util {
         returns (bool isSucc)
     {
         Order storage o = orders[_callID];
-        if (o.tokens == 0) {
-            return true;
+        if (billingType == BillingType.Interval) {
+            if (!o.isFrezon) {
+                return true;
+            } else {
+                return false;
+            }
         }
         require(o.isFrezon == true);
         require(o.isPaid == false);
         address from = o.from;
         uint tokens = o.tokens;
-        ERC20(attToken).approve(owner, tokens);
-        isSucc = ERC20(attToken).transferFrom(owner, from, tokens);
+        isSucc = ERC20(attToken).transfer(from, tokens);
         if (isSucc) {
             o.isFrezon = false;
             o.isPaid = false;
-            TakeFee(_callID, o.fee, o.from);
+            UnlockToken(_callID, msg.gas, o.from, tokens);
         } else {
             revert();
         }
+        return isSucc;
+    }
+
+    function onAllowance(address _from)
+        onlyOwner
+        public
+        returns (uint) 
+    {
+        return ERC20(attToken).allowance(_from, address(this));
+    }
+
+    function withdrawProfit(uint _amount) 
+        onlyOwner
+        public
+        returns(bool isSucc) 
+    {
+        require(_amount <= profitTokens);
+        uint256 balance = ERC20(attToken).balanceOf(address(this));
+        require(profitTokens <= balance);
+        isSucc = ERC20(attToken).transfer(beneficiary, _amount);
+        if (isSucc) {
+            profitTokens = profitTokens.sub(_amount);
+        }else {
+            revert();
+        }
+        ProfitTokensWithdrawn(beneficiary, _amount);
         return isSucc;
     }
     
