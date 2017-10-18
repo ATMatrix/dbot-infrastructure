@@ -3,11 +3,10 @@ pragma solidity ^0.4.11;
 contract BillingBasic {
 
     function billing(
-        uint _callID,
         address _from
     )
         public
-        returns (bool);
+        returns (bool isSucc, uint callID);
 
     function getPrice(
         uint _callID, 
@@ -16,17 +15,17 @@ contract BillingBasic {
         public
         returns (uint);
 
-    function lockToken(
+    function freezeToken(
         uint _callID
     ) 
         returns (bool);
 
-    function takeFee(
+    function deductFee(
         uint _callID
     ) 
         returns (bool);
 
-    function unLockPrice(
+    function unfreezeToken(
         uint _callID
     ) 
         returns (bool);
