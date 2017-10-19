@@ -6,27 +6,27 @@ contract BillingBasic {
         address _from
     )
         public
-        returns (bool isSucc, uint callID);
+        returns (bool isSucc, uint256 callID);
 
     function getPrice(
-        uint _callID, 
+        uint256 _callID, 
         address _from
     ) 
         public
-        returns (uint);
+        returns (uint256);
 
     function freezeToken(
-        uint _callID
+        uint256 _callID
     ) 
         returns (bool);
 
     function deductFee(
-        uint _callID
+        uint256 _callID
     ) 
         returns (bool);
 
     function unfreezeToken(
-        uint _callID
+        uint256 _callID
     ) 
         returns (bool);
 

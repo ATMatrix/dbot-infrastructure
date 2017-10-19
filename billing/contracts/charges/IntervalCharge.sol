@@ -13,16 +13,16 @@ contract IntervalCharge is Charge, Ownable {
     }
 
     struct Token {
-        uint start;
-        uint end;
+        uint256 start;
+        uint256 end;
     } 
 
-    uint amount;
+    uint256 amount;
     IntervalType intervalType;
-    uint daysAfter = 0;
+    uint256 daysAfter = 0;
     mapping (address => Token) tokens;
 
-    function IntervalCharge(uint _amount, uint _intervalType) {
+    function IntervalCharge(uint256 _amount, uint256 _intervalType) {
         amount = _amount;
         intervalType = IntervalType(_intervalType);
         initDaysAfter();
@@ -40,7 +40,7 @@ contract IntervalCharge is Charge, Ownable {
           }
     }
 
-    function getPrice(uint, address _from) onlyOwner returns (uint) {
+    function getPrice(uint256, address _from) onlyOwner returns (uint256) {
         return isFree(_from) ? 0 : amount;
     }
 
