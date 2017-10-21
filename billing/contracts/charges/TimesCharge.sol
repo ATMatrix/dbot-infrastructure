@@ -32,7 +32,7 @@ contract TimesCharge is Charge, Ownable {
         return token.callTimes >= freeTimes ? false : true;
     }
 
-    function resetToken(address _from) {
+    function resetToken(address _from) onlyOwner {
         tokens[_from].callTimes++;
     }
     

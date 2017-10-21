@@ -2,7 +2,6 @@ pragma solidity ^0.4.11;
 
 import "./BillingBasic.sol";
 import "../lib/Ownable.sol";
-import "../lib/Util.sol";
 import "../lib/ERC20.sol";
 import "../charges/Charge.sol";
 import "../charges/FreeCharge.sol";
@@ -22,7 +21,6 @@ contract DbotBilling is BillingBasic, Ownable {
 
     struct Order {
         address from;
-        uint256 tokens;
         uint256 fee;
         bool isFrezon;
         bool isPaid;
@@ -34,8 +32,8 @@ contract DbotBilling is BillingBasic, Ownable {
     BillingType billingType = BillingType.Free;
     uint256 arg0;
     uint256 arg1;
-    uint256 profitTokens = 0;
     uint256 callID = 1000;
+    uint256 profigTokens = 0;
     mapping(uint256 => Order) orders; 
 
     event Billing(uint256 _callID, uint256 _gas, address _from);
@@ -44,7 +42,7 @@ contract DbotBilling is BillingBasic, Ownable {
     event DeductFee(uint256 _callID, uint256 _gas,address _from, uint256 _fee);
     event UnfreezeToken(uint256 _callID, uint256 _gas,address _from, uint256 _fee);
     event Allowance(address _from, address _spender, uint256 _value);
-    event ProfitTokensWithdrawn(address indexed _beneficiary, uint256 _amount);
+    event WithdrawProfit(address _beneficiary, uint256 _amount);
 
     modifier notCalled(uint256 _callID) {
       if (orders[_callID].from != 0) 
@@ -86,13 +84,13 @@ contract DbotBilling is BillingBasic, Ownable {
         public
         returns (bool isSucc, uint256 _callID) 
     {
-        callID++;
-        getPrice(callID, _from);
-        isSucc = freezeToken(callID);
+        _callID = callID;
+        getPrice(_callID, _from);
+        isSucc = freezeToken(_callID);
         if (!isSucc)
             revert();
-        Billing(callID, msg.gas, msg.sender);
-        _callID = callID;
+        Billing(_callID, msg.gas, msg.sender);
+        callID++;
         return (isSucc, _callID);
     } 
 
@@ -104,7 +102,6 @@ contract DbotBilling is BillingBasic, Ownable {
     {
         orders[_callID] = Order({
             from : _from,
-            tokens : 0,
             fee : 0,
             isFrezon : false,
             isPaid : false
@@ -124,30 +121,23 @@ contract DbotBilling is BillingBasic, Ownable {
         Order storage o = orders[_callID];
         require(o.isFrezon == false);
         require(o.isPaid == false);
-        address from = o.from;
-        uint256 fee = o.fee;
-        uint256 tokens = onAllowance(from);
-        Allowance(from, address(this), tokens);
-        require(tokens >= fee);
-        o.tokens = tokens;
-        if ( billingType == BillingType.Interval ) {
-            tokens = fee;
-        }
-        isSucc = ERC20(attToken).transferFrom(from, address(this), tokens);
+        isSucc = doPayment(o.from, o.fee);
         if (!isSucc) {
             revert();
         } else {
             if ( billingType == BillingType.Interval ) {
                 o.isFrezon = false;
                 o.isPaid = true;
-                profitTokens = profitTokens.add(tokens);
-                DeductFee(_callID, msg.gas, o.from, tokens);
+                isSucc = withdrawProfit(o.fee);
+                if (!isSucc)
+                    revert();
+                DeductFee(_callID, msg.gas, o.from, o.fee);
             } else {
                 o.isFrezon = true;
+                FreezeToken(_callID, msg.gas, msg.sender, o.fee);
             }
             Charge(charge).resetToken(o.from);
         }
-        FreezeToken(_callID, msg.gas, msg.sender, tokens);
         return isSucc;
     }
 
@@ -167,14 +157,10 @@ contract DbotBilling is BillingBasic, Ownable {
         } 
         require(o.isFrezon == true);
         require(o.isPaid == false);
-        address from = o.from;
-        require(o.tokens >= o.fee);
-        uint256 refund = o.tokens.sub(o.fee);
-        isSucc = ERC20(attToken).transfer(from, refund);
+        isSucc = withdrawProfit(o.fee);
         if (isSucc) {
             o.isFrezon = false;
             o.isPaid = true;
-            profitTokens = profitTokens.add(o.fee);
             DeductFee(_callID, msg.gas, o.from, o.fee);
         } else {
             revert();
@@ -198,13 +184,11 @@ contract DbotBilling is BillingBasic, Ownable {
         }
         require(o.isFrezon == true);
         require(o.isPaid == false);
-        address from = o.from;
-        uint256 tokens = o.tokens;
-        isSucc = ERC20(attToken).transfer(from, tokens);
+        isSucc = ERC20(attToken).transfer(o.from, o.fee);
         if (isSucc) {
             o.isFrezon = false;
             o.isPaid = false;
-            UnfreezeToken(_callID, msg.gas, o.from, tokens);
+            UnfreezeToken(_callID, msg.gas, o.from, o.fee);
         } else {
             revert();
         }
@@ -212,28 +196,36 @@ contract DbotBilling is BillingBasic, Ownable {
     }
 
     function onAllowance(address _from)
-        onlyOwner
-        public
+        internal
         returns (uint256) 
     {
         return ERC20(attToken).allowance(_from, address(this));
     }
 
-    function withdrawProfit(uint256 _amount) 
-        onlyOwner
-        public
+    function doPayment(address _from, uint256 _amount) 
+        internal
         returns(bool isSucc) 
     {
-        require(_amount <= profitTokens);
-        uint256 balance = ERC20(attToken).balanceOf(address(this));
-        require(profitTokens <= balance);
-        isSucc = ERC20(attToken).transfer(beneficiary, _amount);
-        if (isSucc) {
-            profitTokens = profitTokens.sub(_amount);
-        }else {
+        uint256 tokens = onAllowance(_from);
+        Allowance(_from, address(this), tokens);
+        require(tokens >= _amount);
+        isSucc = ERC20(attToken).transferFrom(_from, address(this), _amount);
+        if (!isSucc)
             revert();
-        }
-        ProfitTokensWithdrawn(beneficiary, _amount);
+        return isSucc;
+    }
+
+    function withdrawProfit(uint256 _amount) 
+        internal
+        returns(bool isSucc) 
+    {
+        uint256 balance = ERC20(attToken).balanceOf(address(this));
+        require(_amount <= balance);
+        isSucc = ERC20(attToken).transfer(beneficiary, _amount);
+        profigTokens = profigTokens.add(_amount);
+        if (!isSucc)
+            revert();
+        WithdrawProfit(beneficiary,_amount);
         return isSucc;
     }
     

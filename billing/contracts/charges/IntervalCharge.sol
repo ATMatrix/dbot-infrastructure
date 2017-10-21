@@ -28,7 +28,7 @@ contract IntervalCharge is Charge, Ownable {
         initDaysAfter();
     }
 
-    function initDaysAfter() onlyOwner {
+    function initDaysAfter() internal {
         if (intervalType == IntervalType.day) {
             daysAfter = 1;
           } else if (intervalType == IntervalType.month) {
