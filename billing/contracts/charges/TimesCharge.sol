@@ -19,21 +19,21 @@ contract TimesCharge is Charge, Ownable {
         freeTimes = _freeTimes;
     }
 
-    function getPrice(uint256 callID, address from) onlyOwner returns (uint256) {
+    function getPrice(uint256, address _from) onlyOwner returns (uint256) {
         if (freeTimes <= 0) {
           return amount;
         } else {
-          return isFree(from) ? 0 : amount;
+          return isFree(_from) ? 0 : amount;
         }
     }
 
-    function isFree(address from) onlyOwner returns (bool) {
-        Token storage token = tokens[from];
-        return token.callTimes++ >= freeTimes ? false : true;
+    function isFree(address _from) onlyOwner returns (bool) {
+        Token storage token = tokens[_from];
+        return token.callTimes >= freeTimes ? false : true;
     }
 
-    function resetToken(address) {
-       
+    function resetToken(address _from) onlyOwner {
+        tokens[_from].callTimes++;
     }
-
+    
 }

@@ -2,8 +2,8 @@ pragma solidity ^0.4.11;
 
 contract Charge {
   
-  function getPrice(uint _callID, address _from) returns (uint);
+  function getPrice(uint256 _callID, address _from) public returns (uint256);
 
-  function resetToken(address _from);
+  function resetToken(address _from) public;
 
 }

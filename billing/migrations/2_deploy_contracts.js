@@ -9,17 +9,20 @@ var FreeCharge = artifacts.require("./charges/FreeCharge.sol");
 var IntervalCharge = artifacts.require("./charges/IntervalCharge.sol");
 var TimesCharge = artifacts.require("./charges/TimesCharge.sol");
 var DbotBilling = artifacts.require("./billing/DbotBilling.sol");
+var ATT = artifacts.require("./att/ATT.sol");
+var ERC20Token = artifacts.require("./att/ERC20Token.sol");
+var MiniMeToken = artifacts.require("./att/MiniMeToken.sol");
+
+
+const beneficiary = "0xca9f427df31a1f5862968fad1fe98c0a9ee068c4";
+const billingType = 1;
+const arg0 = 100;
+const arg1 = 0;
 
 module.exports = function(deployer) {
-
-  deployer.deploy(Mathsol);
-  deployer.deploy(Ownable);
-  deployer.deploy(SafeMath);
-  deployer.deploy(Util);
-  deployer.deploy(BasicToken);
-  deployer.deploy(StandardToken);
-
-  deployer.deploy(SimpleToken).then(function() {
-    return deployer.deploy(DbotBilling, SimpleToken.address, 1, 100, 3, );
+  deployer.deploy(MiniMeToken);
+  deployer.deploy(ATT).then(function () {
+    deployer.deploy(DbotBilling,ATT.address,beneficiary,billingType,arg0,arg1);
   });
+  
 };
