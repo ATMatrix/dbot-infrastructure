@@ -47,7 +47,7 @@ module.exports = class Deployer {
         reject('require a contract name')
       }
       if (arguments.length >= 3) {
-        !(args instanceof Array && isObject(opts)) {
+        if (!(args instanceof Array && isObject(opts))) {
           reject('error type of arguments')
         }
       } else if (isObject(args)) {
