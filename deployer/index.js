@@ -19,7 +19,7 @@ module.exports = class Deployer {
   }
 
   compile(srcs, { srcDir = this.srcDir } = {}) {
-    if (srcs instanceof Array || srcs.length === 0) return false
+    if (!(srcs instanceof Array) || srcs.length === 0) return false
 
     const sources = srcs
       .reduce((ret, src) => {
@@ -29,6 +29,7 @@ module.exports = class Deployer {
 
     const { contracts } = solc
       .compile({ sources }, 1)
+    console.log(contracts)
 
     Object.entries(contracts).forEach(([name, contract]) => {
       contracts[name] = {
