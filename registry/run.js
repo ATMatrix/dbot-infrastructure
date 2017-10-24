@@ -37,9 +37,9 @@ async function run() {
   }
   else {
 
-      // register.setAIAddr('ImageIdentification', '0x987654321987654321987654321').then(function(){
-      //   register.getAIAddr('ImageIdentification');
-      // });
+      register.setAIAddr('ImageIdentification', '0x987654321987654321987654321').then(function(){
+        register.getAIAddr('ImageIdentification');
+      });
 
     register.deleteAIByName('ImageIdentification').then(function(){
       register.getAIAddr('ImageIdentification');
