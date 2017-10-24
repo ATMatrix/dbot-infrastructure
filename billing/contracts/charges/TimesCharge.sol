@@ -19,7 +19,7 @@ contract TimesCharge is Charge, Ownable {
         freeTimes = _freeTimes;
     }
 
-    function getPrice(uint256, address _from) onlyOwner returns (uint256) {
+    function getPrice(uint256, address _from) onlyOwner public returns (uint256) {
         if (freeTimes <= 0) {
           return amount;
         } else {
@@ -27,12 +27,12 @@ contract TimesCharge is Charge, Ownable {
         }
     }
 
-    function isFree(address _from) onlyOwner returns (bool) {
+    function isFree(address _from) onlyOwner public returns (bool) {
         Token storage token = tokens[_from];
         return token.callTimes >= freeTimes ? false : true;
     }
 
-    function resetToken(address _from) onlyOwner {
+    function resetToken(address _from) onlyOwner public {
         tokens[_from].callTimes++;
     }
     

@@ -18,16 +18,19 @@ contract BillingBasic {
     function freezeToken(
         uint256 _callID
     ) 
+        public
         returns (bool);
 
     function deductFee(
         uint256 _callID
     ) 
+        public
         returns (bool);
 
     function unfreezeToken(
         uint256 _callID
     ) 
+        public
         returns (bool);
 
 }

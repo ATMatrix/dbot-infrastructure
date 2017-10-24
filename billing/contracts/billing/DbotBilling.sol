@@ -28,7 +28,7 @@ contract DbotBilling is BillingBasic, Ownable {
     
     address attToken;
     address beneficiary;
-    address charge;
+    address public charge;
     BillingType billingType = BillingType.Free;
     uint256 arg0;
     uint256 arg1;
