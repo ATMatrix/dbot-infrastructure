@@ -8,8 +8,8 @@ async function run() {
     
     const deployer = new Deployer({
       srcDir: './contracts', // The path to your solidity source code, default to './contract'
-      endpoint: 'https://bogong.atmatrix.org', // The address of your ethereum network node, default to 'http://localhost:8080'
-      from: '0xcA9f427df31A1F5862968fad1fE98c0a9eE068c4', // Account used to deploy contracts
+      endpoint: 'https://localhost:8545', // The address of your ethereum network node, default to 'http://localhost:8080'
+      from: '0x3ae88fe370c39384fc16da2c9e768cf5d2495b48', // Account used to deploy contracts
       password: '123456', // Password used to unlock the above account
       gas: 4700000, // Gas sent with transactions for deploying, default to 4700000
     }) // Note all options set here will be used as default parameters on method call, Or you can pass them later when call a method
@@ -18,12 +18,7 @@ async function run() {
         'Register.sol'
         ], { srcDir: './contracts' })
 
-    deployer.deploy('Register.sol:Register', {
-        endpoint: 'https://bogong.atmatrix.org',
-        from: '0xcA9f427df31A1F5862968fad1fE98c0a9eE068c4',
-        password: '123456',
-        gas: 3200000,
-    }).then(console.log, console.log)
+    deployer.deploy('Register.sol:Register').then(console.log, console.log)
 
     // const contractAddress = "0xec458864cd7346e162bd4f1fde771166032c6c57";
     // const register = new Register();
