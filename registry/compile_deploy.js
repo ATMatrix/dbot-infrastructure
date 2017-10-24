@@ -49,15 +49,17 @@ module.exports = (solFile) => {
   //complete complete
 
   //deploy start
-  web3.personal.unlockAccount(account.address, account.password);
-
+  // web3.personal.unlockAccount(account.address, account.password);
+console.log("account.address: " + account.address);
   return new Promise((resolve) => {
     web3.eth.contract(JSON.parse(tokenContractsAbi))
       .new({
         data: tokenContractsBin,
         from: account.address,
-        gas: cost.gas || 900000
+        gas: cost.gas || 4700000
       }, (err, res) => {
+        // console.log(err);
+        // console.log(res);
         if (res.address) {
           fs.writeFileSync(`./build/${solFile}ContractAddress.txt`, res.address)
           console.log('Contract address: ' + res.address);

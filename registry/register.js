@@ -1,6 +1,7 @@
 const Web3 = require('web3');
 const fs = require('fs');
 const config  = require('./config.json')
+const d = require('../worker/index.js')
 
 const {endpoint, account, cost} = config;
 
@@ -34,6 +35,12 @@ module.exports = class Register {
       this.eventRegister.watch((err, res) => {
         if(!err) {
           console.log("Register event triggered: " + JSON.stringify(res));
+          try {
+            d({method: 'animalDetect', url: 'http://img04.tooopen.com/images/20131223/sy_53022345657.jpg'}).then(console.log, console.log);  
+          }
+          catch(e) {
+            console.log(e);
+          }
           resolve("");
         }
       })
