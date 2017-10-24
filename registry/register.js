@@ -1,9 +1,11 @@
 const Web3 = require('web3');
 const fs = require('fs');
 const config  = require('./config.json')
-const d = require('../worker/index.js')
+const d = require('../worker/baiduImageClassify/index.js')
+const e = require('../worker/baiduOcr/index.js')
 
-const {endpoint, account, cost} = config;
+
+const { endpoint, account, cost } = config;
 
 
 module.exports = class Register {
@@ -27,7 +29,7 @@ module.exports = class Register {
 
   }
 
-  registerAI(aiName, address) {
+  async registerAI(aiName, address) {
 
     return new Promise(resolve => {
       this.token.register(aiName, address, {from: this.account, gas: cost.gas || 900000});
@@ -36,12 +38,15 @@ module.exports = class Register {
         if(!err) {
           console.log("Register event triggered: " + JSON.stringify(res));
           try {
-            d({method: 'animalDetect', url: 'http://img04.tooopen.com/images/20131223/sy_53022345657.jpg'}).then(console.log, console.log);  
+            d({method: 'animalDetect', url: 'http://img04.tooopen.com/images/20131223/sy_53022345657.jpg'}).then(console.log, console.log); 
+            e({method: 'idcard', url: 'http://imgsrc.baidu.com/imgad/pic/item/bd3eb13533fa828bbd0022d9f61f4134970a5aec.jpg'}).then(console.log, console.log)        
           }
           catch(e) {
             console.log(e);
           }
-          resolve("");
+          finally {
+            resolve("");
+          }
         }
       })
 
