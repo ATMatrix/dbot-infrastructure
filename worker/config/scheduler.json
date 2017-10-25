@@ -1,7 +1,0 @@
-{
-  "endpoint": "http://localhost:8080",
-  "contract": {
-    "address": "0x47bef510f44c51773db5cf84e903892e8d0dde86",
-    "abi": [{"constant":false,"inputs":[{"name":"question","type":"string"}],"name":"ask","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"answer","type":"string"}],"name":"reply","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"anonymous":false,"inputs":[{"indexed":false,"name":"question","type":"string"}],"name":"NewQuestion","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"answer","type":"string"}],"name":"NewAnswer","type":"event"}]
-  }
-}

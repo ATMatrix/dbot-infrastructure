@@ -1,4 +1,4 @@
-const Register = require('./register');
+const Register = require('./register')
 const CompileDeploy = require('./compile_deploy')
 const fs = require('fs')
 
@@ -24,14 +24,14 @@ async function run() {
   console.log("Contract Address: " + contractAddress);
 
   await register.initialize(contractAddress);
-  register.getAIAddr('ImageIdentification')
-  console.log("ImageIdentification is registered? " + register.isRegistered('ImageIdentification'));
+  register.getAIAddr('ImageIdentification2');
+  console.log("ImageIdentification2 is registered? " + register.isRegistered('ImageIdentification2'));
 
   //判断AI是否已经注册
-  if (!register.isRegistered('ImageIdentification')){
+  if (!register.isRegistered('ImageIdentification2')){
 
-    register.registerAI('ImageIdentification', '0x12345678901234567890123456789').then(function(){
-      register.getAIAddr('ImageIdentification');
+    register.registerAI('ImageIdentification2', '0x12345678901234567890123456789').then(function(){
+      register.getAIAddr('ImageIdentification2');
     });
 
   }
@@ -41,11 +41,12 @@ async function run() {
       //   register.getAIAddr('ImageIdentification');
       // });
 
-    register.deleteAIByName('ImageIdentification').then(function(){
-      register.getAIAddr('ImageIdentification');
-  });
+    await register.deleteAIByName('ImageIdentification2').then(function(){
+      register.getAIAddr('ImageIdentification2');
+  })
 
   }
+  return 0;
 }
 
-run()
+run().then(console.log())

@@ -1,17 +1,16 @@
 {
-  "name": "dbot",
+  "name": "baiduImageClassify",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "node index.js"
+    "test": "node test.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "baidu-aip-sdk": "^1.4.0",
     "request": "^2.83.0",
-    "request-promise": "^4.2.2",
-    "web3": "^0.19.1"
+    "request-promise": "^4.2.2"
   }
 }

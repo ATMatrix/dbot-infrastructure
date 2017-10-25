@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "sol.d": "^1.0.5",
     "solc": "^0.4.17",
     "web3": "^0.19.1"
   }
