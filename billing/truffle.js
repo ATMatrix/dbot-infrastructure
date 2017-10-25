@@ -5,11 +5,12 @@ module.exports = {
       port: 8545,
       network_id: "*", // Match any network id
       from: "0x3ae88fe370c39384fc16da2c9e768cf5d2495b48",
-      password: "542500611",
-      gas: 4.6e6,      
+      password: "542500611",    
       proxy: "",
       bill: "0x5a58182f201e709945bdc5996e09ac7db7078605",
       att: "0x02a5ea454c2abc79411490b8c4a865e0f990162b",
+      before_timeout: 30000000,             
+      test_timeout: 30000000  
     },
     bogong: {
       host: "118.31.18.101", 

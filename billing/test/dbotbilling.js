@@ -9,10 +9,10 @@ contract('DbotBilling', function(accounts) {
       assert.equal(balance.valueOf(), 0, "0 wasn't in the first account");
     });
   });
-  it("should put 1000000 ATT in the first account", function() {
+  it("should put 100 ATT in the first account", function() {
     var att;
     var beforeTokens;
-    var generateTokens = 1000000;
+    var generateTokens = 100;
 
     return ATT.deployed().then(function(instance) {
       att = instance;
@@ -43,10 +43,12 @@ contract('DbotBilling', function(accounts) {
   it("should bill work correctly with deployed contract", async function() {
     var att = await ATT.deployed();
     var bill = await DbotBilling.deployed();
-    var generateTokens = 1000000;    
-    await att.generateTokens(accounts[0], generateTokens, {from: accounts[0]});
-    await att.approve(bill.address, 100, {from: accounts[0]});
-    await bill.billing(accounts[0], {from:accounts[0],gas:3000000});
-
+    await bill.billing(accounts[0], {from:accounts[0]});
+    var callId = await bill.callID();
+    await bill.deductFee(callId--);
+    var balances0 = await att.balanceOf(accounts[0]);
+    var balances1 = await att.balanceOf(accounts[1]);
+    assert.equal(balances0.valueOf(), 1, "1 allowances in account[0] after bill");                          
+    assert.equal(balances1.valueOf(), 99, "99 allowances in account[1] after bill");                          
   });
 });

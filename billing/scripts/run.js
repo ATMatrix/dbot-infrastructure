@@ -7,7 +7,7 @@ const TruffleConfig = require('../truffle');
 const attAdd = "0x3a6e07925cf6a1543b9591efd86c6d1e5b7a5c4e";
 const contractAddress = "0x1717d04e6218eccb40fff197da350d0b3107a218";
 const owner = "0xca9f427df31a1f5862968fad1fe98c0a9ee068c4";
-const beneficiary = "0x81063419f13cab5ac090cd8329d8fff9feead4a0";
+const beneficiary = "0xbd2d69e3e68e1ab3944a865b3e566ca5c48740da";
 const proxy = "0xde6430355bfabd038e93f6f5aa9ccbf18925fc84";
 
 const network = 'bogong';
@@ -27,8 +27,8 @@ this.att = attContract.at(attAdd);
 // console.log(this.att);
 // this.att.generateTokens.sendTransaction(owner,333333333,{from:owner,gas:3000000});        //1.造币
 // this.att.approve.sendTransaction(contractAddress, 333333333,{from:owner,gas:3000000});         //2.approve
-console.log(this.att.allowance(owner,contractAddress,{from:owner,gas:3000000}))
-// console.log(this.att.balanceOf(owner))
+// console.log(this.att.allowance(owner,contractAddress,{from:owner,gas:3000000}))
+console.log(this.att.balanceOf(beneficiary))
 // this.bill.changeController(proxy, {from:owner,gas:3000000});                               //3.change controller                              
 // this.bill.billing(owner,{from:owner,gas:3000000});                                        //4.bill
 // this.bill.deductFee(1002,{from:owner,gas:3000000});                                       //5.deduct
