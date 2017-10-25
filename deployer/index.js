@@ -93,5 +93,5 @@ module.exports = class Deployer {
 
 function isObject(o) {
   return typeof o == 'object'
-    && opts.constructor == Object
+    && o.constructor == Object
 }
