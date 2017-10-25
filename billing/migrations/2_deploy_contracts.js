@@ -13,8 +13,7 @@ var ATT = artifacts.require("./att/ATT.sol");
 var ERC20Token = artifacts.require("./att/ERC20Token.sol");
 var MiniMeToken = artifacts.require("./att/MiniMeToken.sol");
 
-
-const beneficiary = "0x3ae88fe370c39384fc16da2c9e768cf5d2495b48";
+const beneficiary = "0xca9f427df31a1f5862968fad1fe98c0a9ee068c4";
 const billingType = 1;
 const arg0 = 99;
 const arg1 = 0;
