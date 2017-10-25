@@ -33,7 +33,7 @@ contract DbotBilling is BillingBasic, Ownable {
     BillingType billingType = BillingType.Free;
     uint256 arg0;
     uint256 arg1;
-    uint256 callID = 1000;
+    uint256 public callID = 1000;
     uint256 profigTokens = 0;
     mapping(uint256 => Order) orders; 
 

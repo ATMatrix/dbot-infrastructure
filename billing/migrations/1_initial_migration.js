@@ -3,7 +3,7 @@ const Web3 = require('web3');
 const TruffleConfig = require('../truffle');
 
 module.exports = function(deployer, network, accounts, addresses) {
-  // console.log(accounts);
+  console.log(accounts);
   const config = TruffleConfig.networks[network];
   const web3 = new Web3(new Web3.providers.HttpProvider('http://' + config.host + ':' + config.port));
   console.log('>> Unlocking account ' + config.from);

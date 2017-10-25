@@ -13,12 +13,12 @@ var ATT = artifacts.require("./att/ATT.sol");
 var ERC20Token = artifacts.require("./att/ERC20Token.sol");
 var MiniMeToken = artifacts.require("./att/MiniMeToken.sol");
 
-const beneficiary = "0xca9f427df31a1f5862968fad1fe98c0a9ee068c4";
-const billingType = 1;
-const arg0 = 99;
-const arg1 = 0;
 
 module.exports = function(deployer, network, accounts) {
+  const beneficiary = accounts[1];
+  const billingType = 1;
+  const arg0 = 99;
+  const arg1 = 0;
   deployer.deploy(MiniMeToken);
   deployer.deploy(ATT).then(function () {
     deployer.deploy(DbotBilling,ATT.address,beneficiary,billingType,arg0,arg1);

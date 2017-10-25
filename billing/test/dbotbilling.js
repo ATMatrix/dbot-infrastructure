@@ -40,15 +40,13 @@ contract('DbotBilling', function(accounts) {
         });
     });
   });
-  it("should approve attAddress correctly", function() {
+  it("should bill work correctly with deployed contract", async function() {
     var att = await ATT.deployed();
     var bill = await DbotBilling.deployed();
     var generateTokens = 1000000;    
     await att.generateTokens(accounts[0], generateTokens, {from: accounts[0]});
     await att.approve(bill.address, 100, {from: accounts[0]});
-    bill.billing(accounts[0], {from:accounts[0],gas:3000000}).then(function(res){
-      console.log(res);
-    })
+    await bill.billing(accounts[0], {from:accounts[0],gas:3000000});
 
   });
 });
