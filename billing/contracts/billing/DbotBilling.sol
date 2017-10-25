@@ -28,7 +28,8 @@ contract DbotBilling is BillingBasic, Ownable {
     
     address attToken;
     address beneficiary;
-    address public charge;
+    address charge;
+    address controller;
     BillingType billingType = BillingType.Free;
     uint256 arg0;
     uint256 arg1;
@@ -43,6 +44,12 @@ contract DbotBilling is BillingBasic, Ownable {
     event UnfreezeToken(uint256 _callID, uint256 _gas,address _from, uint256 _fee);
     event Allowance(address _from, address _spender, uint256 _value);
     event WithdrawProfit(address _beneficiary, uint256 _amount);
+    event ChangedController(address _oldController, address _newController);
+
+    modifier onlyController() {
+        require(msg.sender == controller);
+        _;
+    }
 
     modifier notCalled(uint256 _callID) {
       if (orders[_callID].from != 0) 
@@ -56,12 +63,19 @@ contract DbotBilling is BillingBasic, Ownable {
       _;
     }
     
-    function DbotBilling(address _att, address _beneficiary,  uint256 _billingType, uint256 _arg0, uint256 _arg1) {
+    function DbotBilling(
+        address _att, 
+        address _beneficiary,  
+        uint256 _billingType, 
+        uint256 _arg0, 
+        uint256 _arg1
+    ) {
         attToken = _att;
         beneficiary = _beneficiary;
         billingType = BillingType(_billingType);
         arg0 = _arg0;
         arg1 = _arg1;
+        controller = msg.sender;
         initCharge();
     }
 
@@ -80,7 +94,7 @@ contract DbotBilling is BillingBasic, Ownable {
     }
 
     function billing(address _from)
-        onlyOwner
+        onlyController
         public
         returns (bool isSucc, uint256 _callID) 
     {
@@ -95,7 +109,7 @@ contract DbotBilling is BillingBasic, Ownable {
     } 
 
     function getPrice(uint256 _callID, address _from)
-        onlyOwner
+        onlyController
         notCalled(_callID)
         public
         returns (uint256 _fee)
@@ -113,7 +127,7 @@ contract DbotBilling is BillingBasic, Ownable {
     }
 
     function freezeToken(uint256 _callID)
-        onlyOwner
+        onlyController
         called(_callID)
         public
         returns (bool isSucc)
@@ -142,7 +156,7 @@ contract DbotBilling is BillingBasic, Ownable {
     }
 
     function deductFee(uint256 _callID)
-        onlyOwner
+        onlyController
         called(_callID)
         public
         returns (bool isSucc)
@@ -169,7 +183,7 @@ contract DbotBilling is BillingBasic, Ownable {
     }
     
     function unfreezeToken(uint256 _callID)
-        onlyOwner
+        onlyController
         called(_callID)
         public
         returns (bool isSucc)
@@ -229,4 +243,8 @@ contract DbotBilling is BillingBasic, Ownable {
         return isSucc;
     }
     
+    function changeController(address _newController) onlyOwner {
+        ChangedController(controller, _newController);
+        controller = _newController;
+    }
 }

@@ -7,12 +7,16 @@ import "../contracts/charges/TimesCharge.sol";
 contract TestTimesCharge {
 
     function testGetPriceWithNewTimesCharge() {
-        TimesCharge timesCharge = new TimesCharge(99,1);
+        uint amount = 99;
+        uint freeTimes = 100;
+        TimesCharge timesCharge = new TimesCharge(amount, freeTimes);
         uint expected = 0;
         address from = msg.sender;
-        Assert.equal(timesCharge.getPrice(0, from), expected, "Price should be zero");
-        timesCharge.resetToken(from);
-        expected = 99;
+        for (var index = 0; index < freeTimes; index++) {
+            Assert.equal(timesCharge.getPrice(0, from), expected, "Price should be zero");
+            timesCharge.resetToken(from);
+        }
+        expected = amount;
         Assert.equal(timesCharge.getPrice(0, from), expected, "Price should be amout");
         timesCharge.resetToken(from);
     }

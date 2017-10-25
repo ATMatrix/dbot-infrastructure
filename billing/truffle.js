@@ -4,8 +4,8 @@ module.exports = {
       host: "localhost",
       port: 8545,
       network_id: "*", // Match any network id
-      from: "0xdf08f82de32b8d460adbe8d72043e3a7e25a3b39",
-      password: "2bdd21761a483f71054e14f5b827213567971c676928d9a1808cbfa4b7501200"
+      from: "0x3ae88fe370c39384fc16da2c9e768cf5d2495b48",
+      password: "542500611"
     },
     bogong: {
       host: "118.31.18.101", 
