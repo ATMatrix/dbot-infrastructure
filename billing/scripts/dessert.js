@@ -9,7 +9,7 @@ async function dessert(){
     const biz_artifacts = require('../build/contracts/AIBusinessController.json');
     const xiaoi_artifacts = require('../build/contracts/xiaoi.json');
     
-    const network = 'development';
+    const network = 'bogong';
     const config = TruffleConfig.networks[network];
     var endpoint = 'http://' + config.host + ':' + config.port;
     console.log(endpoint)
@@ -55,7 +55,7 @@ async function dessert(){
     var b = await att.allowance(owner, bill.address, {from:owner,gas:gasLimit});
     console.log(b);
     await xiaoi.callAI(aiName,{from:owner,gas:gasLimit});
-    let callID = await bill.callID();
+    let callID = await biz.callAIID();
     console.log(callID);
     const d = require('../../worker/baiduImageClassify')    
     var res = await d({method: 'animalDetect', url: 'http://t2.27270.com/uploads/tu/201612/357/7.png'});
