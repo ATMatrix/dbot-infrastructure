@@ -15,7 +15,7 @@ contract AIBusinessController {
 
     event EventTest(address _addr);
     event EventMessage(string _message);
-    event EventFundsFrozen(bool _frozenFlag,uint256 _callID,bytes32 _id);
+    event EventFundsFrozen(bool _frozenFlag,uint256 _callID,bytes32 _id, string arg);
     event EventFundsDeduct(bool _deductFlag);
     event EventCallFundsFrozen(bytes32 id, address consumer, address proxy, uint _callAIID);
     
@@ -39,10 +39,10 @@ contract AIBusinessController {
         billingAddr = _addr;
     }
 
-    function callAI(bytes32 _id, address _consumer) public {
+    function callAI(bytes32 _id, address _consumer, string _arg) public {
         uint256 _callAIID = callAIID;
         saveConsumer(_callAIID, msg.sender);
-        callFundsFrozen(_id, _consumer, _callAIID);
+        callFundsFrozen(_id, _consumer, _callAIID, _arg);
         EventCallFundsFrozen(_id, _consumer, msg.sender, _callAIID);
         callAIID++;
     }
@@ -57,7 +57,7 @@ contract AIBusinessController {
     }
 
     //"0x6d65000000000000000000000000000000000000000000000000000000000000","0x65330d2662b02d41e0cfc0d3928e133712508170"
-    function callFundsFrozen(bytes32 _id, address _fromAddr, uint256 _callAIID) public returns (bool frozenFlag, uint256 callID) {
+    function callFundsFrozen(bytes32 _id, address _fromAddr, uint256 _callAIID, string _arg) public returns (bool frozenFlag, uint256 callID) {
         bytes4 _sigrRegister = bytes4(keccak256("getBillingAddr(bytes32)"));
         bytes4 _sigBilling = bytes4(keccak256("billing(address,uint256)"));
         address _registerAddr = registerAddr;
@@ -69,18 +69,17 @@ contract AIBusinessController {
             mstore(0x4, _id)
             _status := call(3000000, _registerAddr, 0, 0x0, add(4,32), 0x0, 32)
             _billingAddr := mload(0x00)
-            log0(0x0,64)
             //FundsFrozen
-            mstore(0x0, _sigBilling)
-            mstore(0x4, _fromAddr)
-            mstore(0x24, _callAIID)
-            _status := call(3000000, _billingAddr, 0, 0x0, add(4,64), 0x0, 32)
-            frozenFlag := mload(0x0)
+            // mstore(0x0, _sigBilling)
+            // mstore(0x4, _fromAddr)
+            // mstore(0x24, _callAIID)
+            // _status := call(3000000, _billingAddr, 0, 0x0, add(4,64), 0x0, 32)
+            // frozenFlag := mload(0x0)
         }
-        // frozenFlag = BillingBasic(_billingAddr).billing(_fromAddr, _callAIID);
+        frozenFlag = BillingBasic(_billingAddr).billing(_fromAddr, _callAIID);
         status = _status;
         callID = _callAIID;
-        EventFundsFrozen(frozenFlag,callID,_id);
+        EventFundsFrozen(frozenFlag, callID, _id, _arg);
     }
 
     //"0x6d65000000000000000000000000000000000000000000000000000000000000","1000",true
@@ -168,7 +167,7 @@ contract AIBusinessController {
             callID := mload(0x20)
         }
         status = _status;
-        EventFundsFrozen(frozenFlag,callID,_id);
+        EventFundsFrozen(frozenFlag,callID,_id,"");
     }
 
     function callFundsFrozenRegisterTest(bytes32 _id, address _fromAddr) public returns (address addr) {

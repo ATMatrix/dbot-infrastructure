@@ -9,7 +9,7 @@ async function dessert(){
     const biz_artifacts = require('../build/contracts/AIBusinessController.json');
     const xiaoi_artifacts = require('../build/contracts/xiaoi.json');
     
-    const network = 'bogong';
+    const network = 'development';
     const config = TruffleConfig.networks[network];
     var endpoint = 'http://' + config.host + ':' + config.port;
     console.log(endpoint)
@@ -54,18 +54,26 @@ async function dessert(){
     await att.approve(bill.address, 1000000,{from:owner,gas:gasLimit});
     var b = await att.allowance(owner, bill.address, {from:owner,gas:gasLimit});
     console.log(b);
-    await xiaoi.callAI(aiName,{from:owner,gas:gasLimit});
+    let arg = {method: 'animalDetect', url: 'http://t2.27270.com/uploads/tu/201612/357/7.png'};
+    await xiaoi.callAI(aiName, JSON.stringify(arg), {from:owner,gas:gasLimit});
     let callID = await biz.callAIID();
     console.log(callID);
-    const d = require('../../worker/baiduImageClassify')    
-    var res = await d({method: 'animalDetect', url: 'http://t2.27270.com/uploads/tu/201612/357/7.png'});
-    const dataResult = JSON.stringify(res);
-    console.log("dataResult: ", dataResult);
-    await biz.callFundsDeduct(aiName, --callID, true, dataResult.toString(), {from: owner,gas: gasLimit});
-    let ba = await att.balanceOf(owner,{from:owner,gas:gasLimit});
-    let be = await att.balanceOf(beneficiary,{from:owner,gas:gasLimit});
-    console.log(ba);
-    console.log(be);
+    biz.EventFundsFrozen('', async function(error, result){
+        console.log(result)
+        if(!error){
+            let args = JSON.parse(result.args.arg);
+            console.log(args)
+            const d = require('../../worker/baiduImageClassify')    
+            var res = await d(args);
+            const dataResult = JSON.stringify(res);
+            console.log("dataResult: ", dataResult);
+            await biz.callFundsDeduct(aiName, --callID, true, dataResult.toString(), {from: owner,gas: gasLimit});
+            let ba = await att.balanceOf(owner,{from:owner,gas:gasLimit});
+            let be = await att.balanceOf(beneficiary,{from:owner,gas:gasLimit});
+            console.log(ba);
+            console.log(be);
+        }
+    })
 }
 
 dessert();
