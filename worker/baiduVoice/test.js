@@ -1,3 +1,3 @@
 const v = require('./index.js')
 
-v('您好').then(console.log, console.log)
+v({ text: '您好' }).then(console.log, console.log)

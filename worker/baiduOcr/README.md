@@ -13,7 +13,7 @@ npm test
 ~~~javascript
 const ocr = require('./worker/baiduOcr')
 
-const opts = {
+const args = {
   url: 'http://www.images.com/some_image.jpg', // String, address of the image
   method: 'general', // String, the ocr method to query. Must be one of ['generalBasic', 'general', 'generalEnhance', 'accurateBasic', 'accurate', 'webImage', 'bankcard', 'idcard', 'vehicleLicense', 'drivingLicense', 'licensePlate', 'tableBegin', 'tableRecorgnize', 'receipt', 'businessLicense'], [doc](http://ai.baidu.com/docs#/OCR-Node-SDK/top)
   options: {}, // Object, extra options to call the AI
@@ -21,7 +21,7 @@ const opts = {
 
 let result = null
 try {
-  result = await ocr(opts)
+  result = await ocr(args)
 } catch (err) {
   console.log(err)
 }

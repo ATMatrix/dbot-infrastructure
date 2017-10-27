@@ -2,7 +2,7 @@ const crypto = require('crypto')
 const rp = require('request-promise')
 const config = require('./config')
 
-module.exports = async (question) => {
+module.exports = async ({ question }) => {
   const {
     APP_KEY,
     APP_SECRET,

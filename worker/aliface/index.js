@@ -1,7 +1,8 @@
 const rp = require('request-promise')
 const config = require('./config')
 
-module.exports = (url, {
+module.exports = ({
+  url,
   attrs = [
     'age',
     'smiling',
@@ -10,6 +11,7 @@ module.exports = (url, {
     'beauty'
   ]
 } = {}) => {
+  if (!url) throw 'url of image required'
   const {
     API_KEY,
     API_SECRET,

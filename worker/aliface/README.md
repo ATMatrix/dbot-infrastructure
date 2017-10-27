@@ -13,14 +13,14 @@ npm test
 ~~~javascript
 const aliface = require('./worker/aliface')
 
-const url = 'http://www.images.com/some_image.jpg', // String, address of the image
-const opts = {
+const args = {
+  url: 'http://www.images.com/some_image.jpg', // String, address of the image
   attrs: ['age', 'smiling'], // Whether or not detect and return face attributes, default to ['age', 'smiling', 'eyestatus', 'emotion', 'beauty'], [doc](https://console.faceplusplus.com/documents/5679127)
-} // Object, extra options to call the AI
+}
 
 let result = null
 try {
-  result = await aliface(url, opts)
+  result = await aliface(args)
 } catch (err) {
   console.log(err)
 }

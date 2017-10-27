@@ -13,11 +13,13 @@ npm test
 ~~~javascript
 const xunfei = require('./worker/xunfei')
 
-const question = '你好' // String, the question to ask
+const args = {
+ question: '你好', // String, the question to ask
+}
 
 let result = null
 try {
-  result = await xunfei(question)
+  result = await xunfei(args)
 } catch (err) {
   console.log(err)
 }

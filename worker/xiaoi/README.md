@@ -13,11 +13,13 @@ npm test
 ~~~javascript
 const xiaoi = require('./worker/xiaoi')
 
-const question = '你是谁？' // String, the question to ask
+const args = {
+  question: '你是谁？', // String, the question to ask
+}
 
 let result = null
 try {
-  result = await xiaoi(question)
+  result = await xiaoi(args)
 } catch (err) {
   console.log(err)
 }
