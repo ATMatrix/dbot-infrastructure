@@ -22,7 +22,7 @@ contract DbotBilling is BillingBasic, Ownable {
     struct Order {
         address from;
         uint256 fee;
-        bool isFrozen;
+        bool isFrezon;
         bool isPaid;
     }
     
@@ -119,15 +119,6 @@ contract DbotBilling is BillingBasic, Ownable {
         public
         returns (uint256 _fee)
     {
-<<<<<<< HEAD
-        orders[_callID] = Order({
-            from : _from,
-            fee : 0,
-            isFrozen : false,
-            isPaid : false
-        });
-=======
->>>>>>> 0042c98b3e8e4146c42eb57ad557f8f6a2b7b8f3
         Order storage o = orders[_callID];
         _fee = Charge(charge).getPrice(_callID, o.from);
         o.fee = _fee;
@@ -141,21 +132,21 @@ contract DbotBilling is BillingBasic, Ownable {
         returns (bool isSucc)
     {
         Order storage o = orders[_callID];
-        require(o.isFrozen == false);
+        require(o.isFrezon == false);
         require(o.isPaid == false);
         isSucc = doPayment(o.from, o.fee);
         if (!isSucc) {
             revert();
         } else {
             if ( billingType == BillingType.Interval ) {
-                o.isFrozen = false;
+                o.isFrezon = false;
                 o.isPaid = true;
                 isSucc = withdrawProfit(o.fee);
                 if (!isSucc)
                     revert();
                 DeductFee(_callID, msg.gas, o.from, o.fee);
             } else {
-                o.isFrozen = true;
+                o.isFrezon = true;
                 FreezeToken(_callID, msg.gas, msg.sender, o.fee);
             }
             Charge(charge).resetToken(o.from);
@@ -177,11 +168,11 @@ contract DbotBilling is BillingBasic, Ownable {
                 return false;
             }
         } 
-        require(o.isFrozen == true);
+        require(o.isFrezon == true);
         require(o.isPaid == false);
         isSucc = withdrawProfit(o.fee);
         if (isSucc) {
-            o.isFrozen = false;
+            o.isFrezon = false;
             o.isPaid = true;
             DeductFee(_callID, msg.gas, o.from, o.fee);
         } else {
@@ -198,17 +189,17 @@ contract DbotBilling is BillingBasic, Ownable {
     {
         Order storage o = orders[_callID];
         if (billingType == BillingType.Interval) {
-            if (!o.isFrozen) {
+            if (!o.isFrezon) {
                 return true;
             } else {
                 return false;
             }
         }
-        require(o.isFrozen == true);
+        require(o.isFrezon == true);
         require(o.isPaid == false);
         isSucc = ERC20(attToken).transfer(o.from, o.fee);
         if (isSucc) {
-            o.isFrozen = false;
+            o.isFrezon = false;
             o.isPaid = false;
             UnfreezeToken(_callID, msg.gas, o.from, o.fee);
         } else {

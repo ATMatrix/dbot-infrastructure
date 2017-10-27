@@ -43,9 +43,6 @@
            // console.log("res: ", res);
            callId = parseInt(res.args._callID);
            console.log("callId: ", callId);
-          // businessToken.status.call((err,res) => {
-          //    console.log("status: ", res.toString());
-          //  });
            
            console.log("eventFundsFrozen has been detected ");
   
