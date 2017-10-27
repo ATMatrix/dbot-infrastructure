@@ -22,7 +22,7 @@ contract DbotBilling is BillingBasic, Ownable {
     struct Order {
         address from;
         uint256 fee;
-        bool isFrezon;
+        bool isFrozen;
         bool isPaid;
     }
     
@@ -117,7 +117,7 @@ contract DbotBilling is BillingBasic, Ownable {
         orders[_callID] = Order({
             from : _from,
             fee : 0,
-            isFrezon : false,
+            isFrozen : false,
             isPaid : false
         });
         Order storage o = orders[_callID];
@@ -133,21 +133,21 @@ contract DbotBilling is BillingBasic, Ownable {
         returns (bool isSucc)
     {
         Order storage o = orders[_callID];
-        require(o.isFrezon == false);
+        require(o.isFrozen == false);
         require(o.isPaid == false);
         isSucc = doPayment(o.from, o.fee);
         if (!isSucc) {
             revert();
         } else {
             if ( billingType == BillingType.Interval ) {
-                o.isFrezon = false;
+                o.isFrozen = false;
                 o.isPaid = true;
                 isSucc = withdrawProfit(o.fee);
                 if (!isSucc)
                     revert();
                 DeductFee(_callID, msg.gas, o.from, o.fee);
             } else {
-                o.isFrezon = true;
+                o.isFrozen = true;
                 FreezeToken(_callID, msg.gas, msg.sender, o.fee);
             }
             Charge(charge).resetToken(o.from);
@@ -169,11 +169,11 @@ contract DbotBilling is BillingBasic, Ownable {
                 return false;
             }
         } 
-        require(o.isFrezon == true);
+        require(o.isFrozen == true);
         require(o.isPaid == false);
         isSucc = withdrawProfit(o.fee);
         if (isSucc) {
-            o.isFrezon = false;
+            o.isFrozen = false;
             o.isPaid = true;
             DeductFee(_callID, msg.gas, o.from, o.fee);
         } else {
@@ -190,17 +190,17 @@ contract DbotBilling is BillingBasic, Ownable {
     {
         Order storage o = orders[_callID];
         if (billingType == BillingType.Interval) {
-            if (!o.isFrezon) {
+            if (!o.isFrozen) {
                 return true;
             } else {
                 return false;
             }
         }
-        require(o.isFrezon == true);
+        require(o.isFrozen == true);
         require(o.isPaid == false);
         isSucc = ERC20(attToken).transfer(o.from, o.fee);
         if (isSucc) {
-            o.isFrezon = false;
+            o.isFrozen = false;
             o.isPaid = false;
             UnfreezeToken(_callID, msg.gas, o.from, o.fee);
         } else {

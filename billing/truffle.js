@@ -23,9 +23,11 @@ module.exports = {
       gas: 4.6e6,
       from: "0xca9f427df31a1f5862968fad1fe98c0a9ee068c4",
       password: "123456",
-      proxy: "0xb4c00fef51c1ebe1142919ad51f6bd5c5a2acfc1",
-      bill: "0x1717d04e6218eccb40fff197da350d0b3107a218",
-      att: "0x3a6e07925cf6a1543b9591efd86c6d1e5b7a5c4e",
+      biz: "0x95af2f96c08e9638d211e311f481a4244db5739c",
+      bill: "0x8774df2541ab2d38145aee5399a6a6006fdbf845",
+      att: "0x27a32873c4b21f7aef4c94480f377be6bb9da436",
+      proxy: "0x760eadac72a0c1f3854a46aa6539d680aaaf51a6",
+      register: "0xb037ce4ff025cd44d2eeb4b6e89f6e5a4e76c793",
       gasLimit: 4.6e6,
     }
   }

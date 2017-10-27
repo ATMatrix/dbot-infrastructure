@@ -5,7 +5,7 @@ contract SaveData {
     address public owner;
 
     function SaveData() {
-      aiData = '';
+      aiData = "";
       owner = msg.sender;
     }
 
