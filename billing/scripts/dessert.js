@@ -8,8 +8,8 @@ async function dessert(){
     const register_artifacts = require('../build/contracts/Register.json');
     const biz_artifacts = require('../build/contracts/AIBusinessController.json');
     const xiaoi_artifacts = require('../build/contracts/xiaoi.json');
-    
-    const network = 'bogong';
+    const deployedAddress = require('./deployedAddress.json');
+    const network = 'development';
     const config = TruffleConfig.networks[network];
     let endpoint = 'http://' + config.host + ':' + config.port;
     console.log(endpoint)
@@ -29,11 +29,11 @@ async function dessert(){
     Biz.setProvider(provider);
     Xiaoi.setProvider(provider);
 
-    let bill = await Bill.at(config.bill);
-    let att = await ATT.at(config.att);
-    let register = await Register.at(config.register);
-    let biz = await Biz.at(config.biz);
-    let xiaoi = await Xiaoi.at(config.proxy);
+    let bill = await Bill.at(deployedAddress.bill);
+    let att = await ATT.at(deployedAddress.att);
+    let register = await Register.at(deployedAddress.register);
+    let biz = await Biz.at(deployedAddress.biz);
+    let xiaoi = await Xiaoi.at(deployedAddress.proxy);
 
     const owner = config.from;
     let accounts = web3.eth.accounts;
@@ -77,7 +77,6 @@ async function dessert(){
             console.log(be);
         }
     })
-
 }
 
 dessert();
