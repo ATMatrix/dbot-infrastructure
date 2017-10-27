@@ -39,7 +39,8 @@
   
       eventFundsFrozen.watch(function (err, res) {
         if (!err) {
-  
+          let args = JSON.parse(res.args.arg);
+          console.log(args)
            // console.log("res: ", res);
            callId = parseInt(res.args._callID);
            console.log("callId: ", callId);
@@ -47,7 +48,7 @@
            console.log("eventFundsFrozen has been detected ");
   
           try {
-            d({method: 'animalDetect', url: 'http://t2.27270.com/uploads/tu/201612/357/7.png'}).then((res) => {
+            d(args).then((res) => {
               console.log("res: ", res);
               //调用AI得到数据成功
               if(res != null) {
