@@ -1,0 +1,10 @@
+{
+  "endpoint" : "https://bogong.atmatrix.org",
+  "account" : {
+    "address" : "0xcA9f427df31A1F5862968fad1fE98c0a9eE068c4",
+    "password" : "123456"
+  },
+  "cost": {
+    "gas": 4700000
+  }
+}

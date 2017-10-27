@@ -37,16 +37,7 @@ module.exports = class Register {
       this.eventRegister.watch((err, res) => {
         if(!err) {
           console.log("Register event triggered: " + JSON.stringify(res));
-          try {
-            d({method: 'animalDetect', url: 'http://img04.tooopen.com/images/20131223/sy_53022345657.jpg'}).then(console.log, console.log); 
-            e({method: 'idcard', url: 'http://imgsrc.baidu.com/imgad/pic/item/bd3eb13533fa828bbd0022d9f61f4134970a5aec.jpg'}).then(console.log, console.log)        
-          }
-          catch(e) {
-            console.log(e);
-          }
-          finally {
-            resolve("");
-          }
+          resolve("");
         }
       })
 
