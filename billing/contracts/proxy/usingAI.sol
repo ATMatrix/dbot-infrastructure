@@ -10,8 +10,8 @@ contract usingAI {
       bizAddr = _bizAddr;
   }
 
-  function callAI(bytes32 _id) public {
-      AIBusinessController(bizAddr).callAI(_id, msg.sender);
+  function callAI(bytes32 _id, string _arg) public {
+      AIBusinessController(bizAddr).callAI(_id, msg.sender, _arg);
   }  
 
   function __callback(uint _callID, string _result) {

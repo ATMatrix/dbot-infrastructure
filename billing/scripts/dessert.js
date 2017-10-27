@@ -51,25 +51,32 @@ async function dessert(){
     await register.register(aiName, bill.address,{from:owner,gas:gasLimit});
 
     await att.generateTokens(owner,100,{from:owner,gas:gasLimit});
-    let a = await att.balanceOf(owner,{from:owner,gas:gasLimit});
-    console.log("owner balance: ", a.toString());
 
-    await att.approve(bill.address, 1000000, {from:owner,gas:gasLimit});
-    let b = await att.allowance(owner, bill.address, {from:owner,gas:gasLimit});
-    console.log("billing contract has been approved spend ", b.toString() , " tokens");
-
-    //开始冻结ATT
-    await xiaoi.callAI(aiName, {from:owner,gas:gasLimit});
-    let callID = await bill.callID();
+    var a = await att.balanceOf(owner,{from:owner,gas:gasLimit});
+    console.log(a);
+    await att.approve(bill.address, 1000000,{from:owner,gas:gasLimit});
+    var b = await att.allowance(owner, bill.address, {from:owner,gas:gasLimit});
+    console.log(b);
+    let arg = {method: 'animalDetect', url: 'http://t2.27270.com/uploads/tu/201612/357/7.png'};
+    await xiaoi.callAI(aiName, JSON.stringify(arg), {from:owner,gas:gasLimit});
+    let callID = await biz.callAIID();
     console.log(callID);
-
-    // const d = require('../../worker/baiduImageClassify')    
-    // let res = await d({method: 'animalDetect', url: 'http://t2.27270.com/uploads/tu/201612/357/7.png'});
-    // const dataResult = JSON.stringify(res);
-    // console.log("dataResult: ", dataResult);
-
-    //开始扣费
-    // await biz.callFundsDeduct(aiName, --callID, true, dataResult.toString(), {from: owner,gas: gasLimit});
+    biz.EventFundsFrozen('', async function(error, result){
+        console.log(result)
+        if(!error){
+            let args = JSON.parse(result.args.arg);
+            console.log(args)
+            const d = require('../../worker/baiduImageClassify')    
+            var res = await d(args);
+            const dataResult = JSON.stringify(res);
+            console.log("dataResult: ", dataResult);
+            await biz.callFundsDeduct(aiName, --callID, true, dataResult.toString(), {from: owner,gas: gasLimit});
+            let ba = await att.balanceOf(owner,{from:owner,gas:gasLimit});
+            let be = await att.balanceOf(beneficiary,{from:owner,gas:gasLimit});
+            console.log(ba);
+            console.log(be);
+        }
+    })
 
 }
 

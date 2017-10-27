@@ -33,7 +33,6 @@ contract DbotBilling is BillingBasic, Ownable {
     BillingType billingType = BillingType.Free;
     uint256 arg0;
     uint256 arg1;
-    uint256 public callID = 1000;
     uint256 profigTokens = 0;
     mapping(uint256 => Order) orders; 
 
@@ -93,33 +92,42 @@ contract DbotBilling is BillingBasic, Ownable {
         }
     }
 
-    function billing(address _from)
+    function billing(address _from, uint256 _callID)
         onlyController
+        notCalled(_callID)
         public
-        returns (bool isSucc, uint256 _callID) 
+        returns (bool isSucc) 
     {
-        _callID = callID;
+        isSucc = false;
+        orders[_callID] = Order({
+            from : _from,
+            fee : 0,
+            isFrezon : false,
+            isPaid : false
+        });
         getPrice(_callID, _from);
         isSucc = freezeToken(_callID);
         if (!isSucc)
             revert();
         Billing(_callID, msg.gas, msg.sender);
-        callID++;
-        return (isSucc, _callID);
+        return isSucc;
     } 
 
     function getPrice(uint256 _callID, address _from)
         onlyController
-        notCalled(_callID)
+        called(_callID)
         public
         returns (uint256 _fee)
     {
+<<<<<<< HEAD
         orders[_callID] = Order({
             from : _from,
             fee : 0,
             isFrozen : false,
             isPaid : false
         });
+=======
+>>>>>>> 0042c98b3e8e4146c42eb57ad557f8f6a2b7b8f3
         Order storage o = orders[_callID];
         _fee = Charge(charge).getPrice(_callID, o.from);
         o.fee = _fee;
