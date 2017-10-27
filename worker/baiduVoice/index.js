@@ -11,8 +11,10 @@ const {
 
 const client = new SpeechClient(APP_ID, API_KEY, SECRET_KEY)
 
-module.exports = async (text, options = {}) => {
+module.exports = async ({
+  text,
+  options = {},
+}) => {
   if (!text) throw 'text required'
   return client.text2audio(text, options)
 }
-

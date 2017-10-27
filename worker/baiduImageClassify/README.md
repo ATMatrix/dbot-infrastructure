@@ -13,7 +13,7 @@ npm test
 ~~~javascript
 const imageClassify = require('./worker/baiduImageClassify')
 
-const opts = {
+const args = {
   url: 'http://www.images.com/some_image.jpg', // String, address of the image
   method: 'general', // String, the image classify method to query. Must be one of ['dishDetect', 'carDetect', 'logoSearch', 'animalDetect', 'plantDetect', 'objectDetect'], [doc](http://ai.baidu.com/docs#/ImageClassify-Node-SDK/top)
   options: {}, // Object, extra options to call the AI
@@ -21,7 +21,7 @@ const opts = {
 
 let result = null
 try {
-  result = await imageClassify(opts)
+  result = await imageClassify(args)
 } catch (err) {
   console.log(err)
 }

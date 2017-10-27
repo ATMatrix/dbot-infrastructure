@@ -2,7 +2,8 @@ const crypto = require('crypto')
 const rp = require('request-promise')
 const config = require('./config')
 
-module.exports = (question) => {
+module.exports = ({ question }) => {
+  if (!question) throw 'question required'
   const {
     APP_ID,
     APP_KEY,

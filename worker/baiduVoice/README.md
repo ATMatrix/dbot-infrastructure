@@ -13,11 +13,14 @@ npm test
 ~~~javascript
 const voice = require('./worker/baiduVoice')
 
-const text = '您好' // String, the text to generate voice
+const args = {
+  text: '您好', // String, the text to generate voice
+  options: {} // options is extra options to call AI, [doc](http://ai.baidu.com/docs#/TTS-Online-Node-SDK/top)
+}
 
 let result = null
 try {
-  result = await voice(text, opts) // opt is extra options to call AI, [doc](http://ai.baidu.com/docs#/TTS-Online-Node-SDK/top)
+  result = await voice(args)
 } catch (err) {
   console.log(err)
 }
