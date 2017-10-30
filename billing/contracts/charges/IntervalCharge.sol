@@ -20,7 +20,7 @@ contract IntervalCharge is Charge, Ownable {
     uint256 amount;
     IntervalType intervalType;
     uint256 daysAfter = 0;
-    mapping (address => Token) tokens;
+    mapping (address => Token) public tokens;
 
     function IntervalCharge(uint256 _amount, uint256 _intervalType) {
         amount = _amount;

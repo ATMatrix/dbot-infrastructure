@@ -1,1 +1,7 @@
-{"register":"0xf8c45ff6da13189618710db758eada4b724e6939","biz":"0x5e5fbb45b17e0ca2f898b0967742d6fc1a4deeb6","proxy":"0x25479cd08c5bdf3b1d09c81c3e5db4beecff1c3a","att":"0x20f4a5daaeb6ddd29b0a901c03ea9c12414713cc","bill":"0x2d7133b5eef1b2364388ab133b55222d58fd94b6"}
+{
+    "register": "0xf8c45ff6da13189618710db758eada4b724e6939",
+    "biz": "0x5e5fbb45b17e0ca2f898b0967742d6fc1a4deeb6",
+    "proxy": "0x25479cd08c5bdf3b1d09c81c3e5db4beecff1c3a",
+    "att": "0x20f4a5daaeb6ddd29b0a901c03ea9c12414713cc",
+    "bill": "0x2d7133b5eef1b2364388ab133b55222d58fd94b6"
+}
