@@ -9,7 +9,7 @@ async function dessert(){
     const biz_artifacts = require('../build/contracts/AIBusinessController.json');
     const xiaoi_artifacts = require('../build/contracts/xiaoi.json');
     const deployedAddress = require('./deployedAddress.json');
-    const network = 'development';
+    const network = 'bogong';
     const config = TruffleConfig.networks[network];
     let endpoint = 'http://' + config.host + ':' + config.port;
     console.log(endpoint)
@@ -39,25 +39,29 @@ async function dessert(){
     let accounts = web3.eth.accounts;
     const beneficiary = accounts[1];
     const gasLimit = config.gasLimit;
-    const aiName = 'hhe';
+    const aiName = 'xiaoi';
 
     bill.allEvents('', function(error, log){console.log(log);});
     att.allEvents('', function(error, log){console.log(log);});
     register.allEvents('', function(error, log){console.log(log);});
     biz.allEvents('', function(error, log){console.log(log);});
     xiaoi.allEvents('', function(error, log){console.log(log);});
+    web3.eth.filter('', function(error, log){console.log(log);})
 
-    await bill.changeController(biz.address, {from:owner,gas:gasLimit})    
+    await bill.changeController(biz.address, {from:owner,gas:gasLimit});    
     await register.register(aiName, bill.address,{from:owner,gas:gasLimit});
 
     await att.generateTokens(owner,100,{from:owner,gas:gasLimit});
 
     var a = await att.balanceOf(owner,{from:owner,gas:gasLimit});
     console.log(a);
-    await att.approve(bill.address, 1000000,{from:owner,gas:gasLimit});
+    await att.approve(bill.address, 100000,{from:owner,gas:gasLimit});
     var b = await att.allowance(owner, bill.address, {from:owner,gas:gasLimit});
     console.log(b);
-    let arg = {method: 'animalDetect', url: 'http://t2.27270.com/uploads/tu/201612/357/7.png'};
+    // let arg = {method: 'animalDetect', url: 'http://t2.27270.com/uploads/tu/201612/357/7.png'};
+    let arg = {
+        question:"你好!"
+    }
     await xiaoi.callAI(aiName, JSON.stringify(arg), {from:owner,gas:gasLimit});
     let callID = await biz.callAIID();
     console.log(callID);
@@ -66,7 +70,7 @@ async function dessert(){
         if(!error){
             let args = JSON.parse(result.args.arg);
             console.log(args)
-            const d = require('../../worker/baiduImageClassify')    
+            const d = require('../../worker/xiaoi')    
             var res = await d(args);
             const dataResult = JSON.stringify(res);
             console.log("dataResult: ", dataResult);

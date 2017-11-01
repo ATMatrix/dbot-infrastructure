@@ -35,7 +35,7 @@
       let eventFundsFrozen = businessToken.EventFundsFrozen();
       let eventFundsDeduct = businessToken.EventFundsDeduct();
       
-      let aiName = 'hhe';
+      let aiName = 'xiaoi';
       let hex = '0x' + Buffer.from(aiName, 'utf8').toString("hex");
       for(let i = hex.length; i < 66; i++) {
           hex += '0';

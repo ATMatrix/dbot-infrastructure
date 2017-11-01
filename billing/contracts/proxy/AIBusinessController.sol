@@ -18,7 +18,8 @@ contract AIBusinessController {
     event EventFundsFrozen(bool _frozenFlag,uint256 _callID,bytes32 _id, string arg);
     event EventFundsDeduct(bool _deductFlag);
     event EventCallFundsFrozen(bytes32 id, address consumer, address proxy, uint _callAIID);
-    
+    event EventWorker(bytes32 _id, uint256 _callID, bool _workerFlag);
+
     function AIBusinessController(address _registerAddr) public 
     {
         owner = msg.sender;
@@ -84,6 +85,7 @@ contract AIBusinessController {
 
     //"0x6d65000000000000000000000000000000000000000000000000000000000000","1000",true
     function callFundsDeduct(bytes32 _id, uint256 _callID, bool _workerFlag, string _result) public returns (bool deductFlag) {
+        EventWorker(_id, _callID, _workerFlag);
         bytes4 _sigRegister = bytes4(keccak256("getBillingAddr(bytes32)"));
         bytes4 _sigrDeduct = bytes4(keccak256("deductFee(uint256)"));
         bytes4 _sigUnDeduct = bytes4(keccak256("unfreezeToken(uint256)"));
