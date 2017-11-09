@@ -7,7 +7,7 @@ async function dessert(){
     const att_artifacts = require('../build/contracts/ATT.json');
     const register_artifacts = require('../build/contracts/Register.json');
     const biz_artifacts = require('../build/contracts/AIBusinessController.json');
-    const xiaoi_artifacts = require('../build/contracts/xiaoi.json');
+    const xiaoi_artifacts = require('../build/contracts/Consumer.json');
     const deployedAddress = require('./deployedAddress.json');
     const network = 'bogong';
     const config = TruffleConfig.networks[network];
@@ -33,7 +33,7 @@ async function dessert(){
     let att = await ATT.at(deployedAddress.att);
     let register = await Register.at(deployedAddress.register);
     let biz = await Biz.at(deployedAddress.biz);
-    let xiaoi = await Xiaoi.at(deployedAddress.proxy);
+    let xiaoi = await Xiaoi.at(deployedAddress.consumer);
 
     const owner = config.from;
     let accounts = web3.eth.accounts;
@@ -50,9 +50,7 @@ async function dessert(){
 
     await bill.changeController(biz.address, {from:owner,gas:gasLimit});    
     await register.register(aiName, bill.address,{from:owner,gas:gasLimit});
-
-    await att.generateTokens(owner,100,{from:owner,gas:gasLimit});
-
+    await att.generateTokens(owner,1000000,{from:owner,gas:gasLimit});
     var a = await att.balanceOf(owner,{from:owner,gas:gasLimit});
     console.log(a);
     await att.approve(bill.address, 100000,{from:owner,gas:gasLimit});

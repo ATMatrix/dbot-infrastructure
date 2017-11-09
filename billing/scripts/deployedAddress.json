@@ -1,7 +1,7 @@
 {
-    "register": "0xac78e13cfdbaea22f34eb10ec167ee3d0038fa58",
-    "biz": "0xcff48c6dd1d8766fcd1ff06d3332fefe59034fe2",
-    "proxy": "0xbfdbe642859c7b874840ee4256ebaaba760eea63",
-    "att": "0xe1cfa4728a454a22dd4033321b0a33a80caa3158",
-    "bill": "0xb8a2036568a5c35a1828b9b889684dc6a8430664"
+    "register": "0x49cbe211ecad59cc686aed7eb03aaeb931dcfb53",
+    "biz": "0xb567feca64668ed0243ce64d767180a9fad700e7",
+    "consumer": "0xe47a8d40e2bded0d986bb258e331a086499a694c",
+    "att": "0xde6430355bfabd038e93f6f5aa9ccbf18925fc84",
+    "bill": "0x29a56daca724c834c95788343e6dec9a973634ac"
 }

@@ -16,7 +16,7 @@ contract AIBusinessController {
     event EventTest(address _addr);
     event EventMessage(string _message);
     event EventFundsFrozen(bool _frozenFlag,uint256 _callID,bytes32 _id, string arg);
-    event EventFundsDeduct(bool _deductFlag);
+    event EventFundsDeduct(bytes32 _id, uint256 _callID, bool _deductFlag);
     event EventCallFundsFrozen(bytes32 id, address consumer, address proxy, uint _callAIID);
     event EventWorker(bytes32 _id, uint256 _callID, bool _workerFlag);
 
@@ -123,8 +123,8 @@ contract AIBusinessController {
             }
         }
         status = _status;
+        EventFundsDeduct(_id, _callID, deductFlag);
         callbackAI(status, _callID, _result);
-        EventFundsDeduct(deductFlag);
     }
 
     //test start
@@ -153,7 +153,7 @@ contract AIBusinessController {
             }
         }
         status = _status;
-        EventFundsDeduct(deductFlag);
+        EventFundsDeduct(_id, _callID, deductFlag);
     }
 
     function callFundsFrozenBillingTest(bytes32 _id, address _fromAddr) public returns (bool frozenFlag, uint256 callID) {
