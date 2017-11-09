@@ -8,6 +8,7 @@ async function freeze(){
   const register_artifacts = require('../build/contracts/Register.json');
   const biz_artifacts = require('../build/contracts/AIBusinessController.json');
   const xiaoi_artifacts = require('../build/contracts/xiaoi.json');
+  const deployedAddress = require('./deployedAddress.json');
   
   const network = 'bogong';
   const config = TruffleConfig.networks[network];
@@ -29,17 +30,17 @@ async function freeze(){
   Biz.setProvider(provider);
   Xiaoi.setProvider(provider);
 
-  let bill = await Bill.at(config.bill);
-  let att = await ATT.at(config.att);
-  let register = await Register.at(config.register);
-  let biz = await Biz.at(config.biz);
-  let xiaoi = await Xiaoi.at(config.proxy);
+  let bill = await Bill.at(deployedAddress.bill);
+  let att = await ATT.at(deployedAddress.att);
+  let register = await Register.at(deployedAddress.register);
+  let biz = await Biz.at(deployedAddress.biz);
+  let xiaoi = await Xiaoi.at(deployedAddress.proxy);
 
   const owner = config.from;
   let accounts = web3.eth.accounts;
   const beneficiary = accounts[1];
   const gasLimit = config.gasLimit;
-  const aiName = 'hhe';
+  const aiName = 'xiaoi';
 
   bill.allEvents('', function(error, log){console.log(log);});
   att.allEvents('', function(error, log){console.log(log);});

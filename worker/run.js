@@ -31,11 +31,15 @@
   
       let businessToken = await BusinessContract.at(deployedAddress.biz);
       let att = await ATT.at(deployedAddress.att);
+
+      // att.generateTokens(account.address, 2000, {from: account.address, gas: 700000});
+
+      console.log("att: ", deployedAddress.att);
   
       let eventFundsFrozen = businessToken.EventFundsFrozen();
       let eventFundsDeduct = businessToken.EventFundsDeduct();
       
-      let aiName = 'hhe';
+      let aiName = 'xiaoi';
       let hex = '0x' + Buffer.from(aiName, 'utf8').toString("hex");
       for(let i = hex.length; i < 66; i++) {
           hex += '0';
@@ -44,7 +48,22 @@
       console.log("aiName: ",aiName);
       const owner = contractAddress.from;
       const beneficiary = web3.eth.accounts[1];
-  
+      console.log("beneficiary", beneficiary);
+      att.balanceOf(account.address).then(function(res) {
+        console.log("balance1: ", res);
+      })
+      att.balanceOf(beneficiary).then(function(res) {
+        console.log("balance2: ", res);
+      })
+      att.transfer(beneficiary, 200, {from: account.address, gas: 70000}).then(function(res) {
+        console.log("transfer success:", res);
+        att.balanceOf(account.address).then(function(res) {
+          console.log("balance1: ", res);
+        })
+        att.balanceOf(beneficiary).then(function(res) {
+          console.log("balance2: ", res);
+        })
+      })
       eventFundsFrozen.watch(function (err, res) {
         if (!err) {
           console.log("res: ", res);
