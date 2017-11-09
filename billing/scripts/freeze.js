@@ -33,7 +33,7 @@ async function freeze(){
   let att = await ATT.at(config.att);
   let register = await Register.at(config.register);
   let biz = await Biz.at(config.biz);
-  let xiaoi = await Xiaoi.at(config.proxy);
+  let xiaoi = await Xiaoi.at(config.consumer);
 
   const owner = config.from;
   let accounts = web3.eth.accounts;

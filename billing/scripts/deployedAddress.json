@@ -1,1 +1,7 @@
-{"register":"0xf8c45ff6da13189618710db758eada4b724e6939","biz":"0x5e5fbb45b17e0ca2f898b0967742d6fc1a4deeb6","proxy":"0x25479cd08c5bdf3b1d09c81c3e5db4beecff1c3a","att":"0x20f4a5daaeb6ddd29b0a901c03ea9c12414713cc","bill":"0x2d7133b5eef1b2364388ab133b55222d58fd94b6"}
+{
+    "register": "0x49cbe211ecad59cc686aed7eb03aaeb931dcfb53",
+    "biz": "0xb567feca64668ed0243ce64d767180a9fad700e7",
+    "consumer": "0xe47a8d40e2bded0d986bb258e331a086499a694c",
+    "att": "0xde6430355bfabd038e93f6f5aa9ccbf18925fc84",
+    "bill": "0x29a56daca724c834c95788343e6dec9a973634ac"
+}
