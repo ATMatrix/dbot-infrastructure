@@ -26,15 +26,15 @@ contract DbotBilling is BillingBasic, Ownable {
         bool isPaid;
     }
     
-    address attToken;
-    address beneficiary;
-    address charge;
-    address controller;
+    address public attToken;
+    address public beneficiary;
+    address public charge;
+    address public controller;
+    uint256 public profigTokens = 0;
+    mapping(uint256 => Order) public orders; 
     BillingType billingType = BillingType.Free;
     uint256 arg0;
     uint256 arg1;
-    uint256 profigTokens = 0;
-    mapping(uint256 => Order) orders; 
 
     event Billing(uint256 _callID, uint256 _gas, address _from);
     event GetPrice(uint256 _callID, uint256 _gas, address _from, uint256 _price);

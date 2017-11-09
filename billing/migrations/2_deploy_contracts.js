@@ -10,7 +10,7 @@ var MiniMeToken = artifacts.require("./att/MiniMeToken.sol");
 
 var Register = artifacts.require("./register/Register.sol");
 var AIBusinessController = artifacts.require("./proxy/AIBusinessController.sol");
-var Xiaoi = artifacts.require("./proxy/xiaoi.sol");
+var Consumer = artifacts.require("./proxy/Consumer.sol");
 var UsingAI = artifacts.require("./proxy/usingAI.sol");
 
 const fs = require('fs-extra')
@@ -28,8 +28,8 @@ module.exports =  function(deployer, network, accounts) {
     deployedAddress.register = Register.address;
     deployer.deploy(AIBusinessController, Register.address).then(function () {
       deployedAddress.biz = AIBusinessController.address;
-      deployer.deploy(Xiaoi, AIBusinessController.address).then(function () {
-        deployedAddress.proxy = Xiaoi.address;
+      deployer.deploy(Consumer, AIBusinessController.address).then(function () {
+        deployedAddress.consumer = Consumer.address;
         deployer.deploy(ATT).then(function () {
           deployedAddress.att = ATT.address;
           deployer.deploy(DbotBilling,ATT.address,beneficiary,billingType,arg0,arg1).then(function(){
