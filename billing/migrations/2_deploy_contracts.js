@@ -16,9 +16,7 @@ var UsingAI = artifacts.require("./proxy/usingAI.sol");
 const fs = require('fs-extra')
 
 module.exports =  function(deployer, network, accounts) {
-  console.log("2_start");
   const beneficiary = '0xE83c90a780507B84cF08065DDA3Cc1976b172c25';
-  console.log("beneficiary: ", beneficiary);
   const billingType = 1;
   const arg0 = 99;
   const arg1 = 0;
