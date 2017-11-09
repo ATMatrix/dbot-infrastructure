@@ -3,11 +3,11 @@ pragma solidity ^0.4.11;
 
 import "./usingAI.sol";
 
-contract consumer is usingAI {
+contract Consumer is usingAI {
 
   event newCallback(uint _callID, string _result);
 
-  function consumer(address bizAddr) {
+  function Consumer(address bizAddr) {
       addrResolver(bizAddr);
   }
 
