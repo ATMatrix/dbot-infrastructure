@@ -1,0 +1,33 @@
+{
+  "development": {
+    "endpoint": "https://bogong.atmatrix.org",
+    "account": {
+      "address": "0xca9f427df31a1f5862968fad1fe98c0a9ee068c4",
+      "password": "123456"
+    },
+    "gas": 1800000,
+    "contracts": {
+      "register": "0x49cbe211ecad59cc686aed7eb03aaeb931dcfb53",
+      "biz": "0xb567feca64668ed0243ce64d767180a9fad700e7",
+      "consumer": "0xe47a8d40e2bded0d986bb258e331a086499a694c",
+      "att": "0xde6430355bfabd038e93f6f5aa9ccbf18925fc84",
+      "bill": "0x29a56daca724c834c95788343e6dec9a973634ac"
+    }
+  },
+  "production": {},
+  "test": {
+    "endpoint": "https://ropsten.infura.io/hDfusAJod3dkRnsLX5LY",
+    "account": {
+      "address": "0xd8d8cab1a930cf68014b2da6cb0f932158377aa7",
+      "password": "123456"
+    },
+    "gas": 4000000,
+    "contracts": {
+      "register": "0x51fbf6cec21fb31c6f5e6a9f8d3e6def6939f5b1",
+      "biz": "0xf64f106a8962cfadc22e6a0d9a77b70b5d0d831a",
+      "consumer": "0x9582038796b692657d3b6d09620090d37f575e07",
+      "att": "0xc54b6b827f5e8254d3892ecc05b3e439d989cb71",
+      "bill": "0x6e70e242ad0654ac9a75d0303ab129b5a027067c"
+    }
+  }
+}

@@ -1,4 +1,4 @@
-async function dessert(){
+async function ropsten(){
     const fs = require('fs')
     const Web3 = require('web3')
     const contract = require("truffle-contract");
@@ -42,6 +42,8 @@ async function dessert(){
     const gas = config.gas;
     const aiName = 'xiaoi';
 
+    console.log(bill)
+
     bill.allEvents('', function(error, log){console.log(log);});
     att.allEvents('', function(error, log){console.log(log);});
     register.allEvents('', function(error, log){console.log(log);});
@@ -82,4 +84,4 @@ async function dessert(){
     })
 }
 
-dessert();
+ropsten();

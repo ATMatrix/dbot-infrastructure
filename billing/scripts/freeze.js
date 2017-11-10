@@ -8,7 +8,7 @@ async function freeze(){
   const register_artifacts = require('../build/contracts/Register.json');
   const biz_artifacts = require('../build/contracts/AIBusinessController.json');
   const xiaoi_artifacts = require('../build/contracts/xiaoi.json');
-  const deployedAddress = require('./deployedAddress.json');
+  const deployedAddress = require('./blockchain.json');
   
   const network = 'bogong';
   const config = TruffleConfig.networks[network];
