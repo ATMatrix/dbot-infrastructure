@@ -1,21 +1,17 @@
     async function run() {
       const Web3 = require('web3');
       const fs = require('fs');
-      const config  = require('./config.json')
       const contract = require("truffle-contract");
-      const TruffleConfig = require('../billing/truffle');
       const business_artifacts = require('../billing/build/contracts/AIBusinessController.json');   
       const att_artifacts = require('../billing/build/contracts/ATT.json');
       
-      const deployedAddress = require('../billing/scripts/deployedAddress.json');
-      
-      const { endpoint, account, cost } = config;
-      
-      const network = 'bogong';
-      const contractAddress = TruffleConfig.networks[network];
-  
+      const bc = require('../billing/scripts/blockchain.json');
+      const network = 'test';
+      const config = bc[network];
+      let endpoint = config.endpoint;
+
       const web3 = new Web3(new Web3.providers.HttpProvider(endpoint));
-      web3.personal.unlockAccount(account.address, account.password);
+      web3.personal.unlockAccount(config.account.address, config.account.password);
       let provider = new Web3.providers.HttpProvider(endpoint);
       
       const d = require('./baiduImageClassify') 
@@ -28,7 +24,8 @@
       let ATT = contract(att_artifacts);
       BusinessContract.setProvider(provider);
       ATT.setProvider(provider);
-  
+
+      let deployedAddress = config.contracts;
       let businessToken = await BusinessContract.at(deployedAddress.biz);
       let att = await ATT.at(deployedAddress.att);
 
@@ -46,18 +43,20 @@
       }
       aiName = hex;
       console.log("aiName: ",aiName);
-      const owner = contractAddress.from;
-      const beneficiary = web3.eth.accounts[1];
+      const owner = config.account.address;
+      const gas = config.gas;      
+      // const beneficiary = web3.eth.accounts[1];
+      const beneficiary = "0xE83c90a780507B84cF08065DDA3Cc1976b172c25";
       console.log("beneficiary", beneficiary);
-      att.balanceOf(account.address).then(function(res) {
+      att.balanceOf(owner).then(function(res) {
         console.log("balance1: ", res);
       })
       att.balanceOf(beneficiary).then(function(res) {
         console.log("balance2: ", res);
       })
-      att.transfer(beneficiary, 200, {from: account.address, gas: 70000}).then(function(res) {
+      att.transfer(beneficiary, 200, {from: owner, gas: gas}).then(function(res) {
         console.log("transfer success:", res);
-        att.balanceOf(account.address).then(function(res) {
+        att.balanceOf(owner).then(function(res) {
           console.log("balance1: ", res);
         })
         att.balanceOf(beneficiary).then(function(res) {
@@ -88,17 +87,17 @@
                  const dataResult = JSON.stringify(res);
                  console.log("dataResult: ", dataResult);
                  
-                businessToken.callFundsDeduct(aiName, callId, true, dataResult.toString(), {from: owner,gas: cost.gas}).then(async function(r){
-                 await att.balanceOf(owner, {from:owner,gas:cost.gas}).then(function(r) {
+                businessToken.callFundsDeduct(aiName, callId, true, dataResult.toString(), {from: owner,gas: gas}).then(async function(r){
+                 await att.balanceOf(owner, {from:owner,gas:gas}).then(function(r) {
                    console.log("owner balance: ", r.toString());
                  });
-                 await att.balanceOf(beneficiary, {from:owner,gas:cost.gas}).then(function(r) {
+                 await att.balanceOf(beneficiary, {from:owner,gas:gas}).then(function(r) {
                    console.log("beneficiary balance:", r.toString());
                  });
                 });
                }
                else {
-                businessToken.callFundsDeduct(aiName, callId, false, dataResult.toString(), {from: owner,gas: cost.gas});
+                businessToken.callFundsDeduct(aiName, callId, false, dataResult.toString(), {from: owner,gas: gas});
                }
              })
            }
