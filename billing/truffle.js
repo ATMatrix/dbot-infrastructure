@@ -29,7 +29,7 @@ module.exports = {
       port: 4045,
       endpoint: 'http://118.31.18.101:4045',
       network_id: "3",       
-      gas: 4000000,
+      gas: 4.6e6,
       from: "0xD8D8cAB1a930cf68014B2da6CB0F932158377aA7",
       password: "123456",
     }

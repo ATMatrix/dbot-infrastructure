@@ -1,1 +1,34 @@
-{"development":{"endpoint":"https://bogong.atmatrix.org","account":{"address":"0xca9f427df31a1f5862968fad1fe98c0a9ee068c4","password":"123456"},"gas":1800000,"contracts":{"register":"0x49cbe211ecad59cc686aed7eb03aaeb931dcfb53","biz":"0xb567feca64668ed0243ce64d767180a9fad700e7","consumer":"0xe47a8d40e2bded0d986bb258e331a086499a694c","att":"0xde6430355bfabd038e93f6f5aa9ccbf18925fc84","bill":"0x29a56daca724c834c95788343e6dec9a973634ac"}},"production":{},"test":{"endpoint":"http://118.31.18.101:4045","account":{"address":"0xD8D8cAB1a930cf68014B2da6CB0F932158377aA7","password":"123456"},"gas":4000000,"contracts":{"register":"0x09b485e3c7ba37b2bd583ab709597f19b0216712","biz":"0x0527c8aa6f8ed08fee74836844a9e216db1b98de","consumer":"0xdc373859333da4aa006fb0de4bb00d12613fb904","att":"0x5e8d1232eecdae123d10353c42d087e396dce343","bill":"0x7d7cd5a6144a9cfb3f9ae95ccce8002ca292b6f6"},"beneficiary":"0xE83c90a780507B84cF08065DDA3Cc1976b172c25"}}
+{
+  "development": {
+    "endpoint": "https://bogong.atmatrix.org",
+    "account": {
+      "address": "0xca9f427df31a1f5862968fad1fe98c0a9ee068c4",
+      "password": "123456"
+    },
+    "gas": 1800000,
+    "contracts": {
+      "register": "0x49cbe211ecad59cc686aed7eb03aaeb931dcfb53",
+      "biz": "0xb567feca64668ed0243ce64d767180a9fad700e7",
+      "consumer": "0xe47a8d40e2bded0d986bb258e331a086499a694c",
+      "att": "0xde6430355bfabd038e93f6f5aa9ccbf18925fc84",
+      "bill": "0x29a56daca724c834c95788343e6dec9a973634ac"
+    }
+  },
+  "production": {},
+  "test": {
+    "endpoint": "http://118.31.18.101:4045",
+    "account": {
+      "address": "0xD8D8cAB1a930cf68014B2da6CB0F932158377aA7",
+      "password": "123456"
+    },
+    "gas": 4000000,
+    "contracts": {
+      "register": "0x09b485e3c7ba37b2bd583ab709597f19b0216712",
+      "biz": "0x0527c8aa6f8ed08fee74836844a9e216db1b98de",
+      "consumer": "0xdc373859333da4aa006fb0de4bb00d12613fb904",
+      "att": "0x5e8d1232eecdae123d10353c42d087e396dce343",
+      "bill": "0x7d7cd5a6144a9cfb3f9ae95ccce8002ca292b6f6"
+    },
+    "beneficiary": "0xE83c90a780507B84cF08065DDA3Cc1976b172c25"
+  }
+}
