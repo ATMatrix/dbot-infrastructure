@@ -17,19 +17,22 @@ module.exports = {
     },
     bogong: {
       host: "118.31.18.101", 
-      port: 4045,
-      endpoint: 'http://118.31.18.101:4045',
-      network_id: "*",       
+      port: 8545,
+      endpoint: 'http://118.31.18.101:8545',
+      network_id: "3",       
       gas: 4.6e6,
-      from: "0xca9f427df31a1f5862968fad1fe98c0a9ee068c4",
+      from: "0xD8D8cAB1a930cf68014B2da6CB0F932158377aA7",
       password: "123456",
     },
     ropsten: {
-      endpoint: "https://ropsten.infura.io/" + infura_apikey,
-      provider: new HDWalletProvider(mnemonic, "https://ropsten.infura.io/" + infura_apikey, 4),
-      network_id: 3,
+      host: "118.31.18.101", 
+      port: 4045,
+      endpoint: 'http://118.31.18.101:4045',
+      network_id: "3",       
       gas: 4000000,
-      from: '0xd8d8cab1a930cf68014b2da6cb0f932158377aa7'
+      from: "0xD8D8cAB1a930cf68014B2da6CB0F932158377aA7",
+      password: "123456",
     }
+    
   }
 };
