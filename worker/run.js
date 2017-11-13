@@ -1,3 +1,5 @@
+    const blockchain = require("./util").default.blockchain
+    
     async function run() {
       const Web3 = require('web3');
       const fs = require('fs');
@@ -5,10 +7,9 @@
       const business_artifacts = require('../billing/build/contracts/AIBusinessController.json');   
       const att_artifacts = require('../billing/build/contracts/ATT.json');
       
-      const bc = require('../billing/scripts/blockchain.json');
-      const network = 'test';
-      const config = bc[network];
+      const config = blockchain;
       let endpoint = config.endpoint;
+      // console.log(endpoint)
 
       const web3 = new Web3(new Web3.providers.HttpProvider(endpoint));
       web3.personal.unlockAccount(config.account.address, config.account.password);
@@ -46,7 +47,8 @@
       const owner = config.account.address;
       const gas = config.gas;      
       // const beneficiary = web3.eth.accounts[1];
-      const beneficiary = "0xE83c90a780507B84cF08065DDA3Cc1976b172c25";
+      // const beneficiary = "0xE83c90a780507B84cF08065DDA3Cc1976b172c25";
+      const beneficiary = blockchain.beneficiary;
       console.log("beneficiary", beneficiary);
       att.balanceOf(owner).then(function(res) {
         console.log("balance1: ", res);
