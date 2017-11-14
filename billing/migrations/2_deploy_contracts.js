@@ -22,7 +22,7 @@ const equivalent = {
   'prod': 'production'
 }
 
-const beneficiary = '0xE83c90a780507B84cF08065DDA3Cc1976b172c25';
+const beneficiary = '0xbd2d69e3e68e1ab3944a865b3e566ca5c48740da';
 const billingType = 1;
 const arg0 = 99;
 const arg1 = 0;
