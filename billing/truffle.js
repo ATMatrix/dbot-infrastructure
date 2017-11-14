@@ -30,6 +30,7 @@ module.exports = {
       endpoint: 'http://118.31.18.101:4045',
       network_id: "3",       
       gas: 4.6e6,
+      // gasPrice: 0.05e13,
       from: "0xD8D8cAB1a930cf68014B2da6CB0F932158377aA7",
       password: "123456",
     }

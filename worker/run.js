@@ -1,4 +1,5 @@
-    const blockchain = require("./util").default.blockchain
+    const blockchain = require("./util").blockchain
+    console.log(blockchain)
     
     async function run() {
       const Web3 = require('web3');
