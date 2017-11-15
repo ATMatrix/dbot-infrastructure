@@ -15,6 +15,6 @@ module.exports = function(deployer, network, accounts, addresses) {
   console.log(web3.isConnected())
   console.log('>> Unlocking account ' + config.from);
   // web3.personal.importRawKey('0d3b6ebd6e83c0341428983819b55a4ea717498c749e0055491c16361fc9bd61','123456');  
-  web3.personal.unlockAccount(config.from, config.password, 36000);
+  web3.personal.unlockAccount(config.from, config.password);
   deployer.deploy(Migrations);
 };
