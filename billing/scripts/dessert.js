@@ -18,6 +18,13 @@ async function dessert(){
     console.log(web3.eth.accounts)
     console.log(web3.isConnected())
     web3.personal.unlockAccount(config.account.address, config.account.password);
+    
+    var rtt_token_abi = [{"constant":true,"inputs":[],"name":"name","outputs":[{"name":"","type":"string"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_spender","type":"address"},{"name":"_value","type":"uint256"}],"name":"approve","outputs":[{"name":"success","type":"bool"}],"payable":false,"type":"function"},{"constant":false,"inputs":[],"name":"mint","outputs":[],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"totalSupply","outputs":[{"name":"supply","type":"uint256"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_from","type":"address"},{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transferFrom","outputs":[{"name":"success","type":"bool"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"decimals","outputs":[{"name":"","type":"uint8"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"version","outputs":[{"name":"","type":"string"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"_owner","type":"address"}],"name":"balanceOf","outputs":[{"name":"balance","type":"uint256"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"symbol","outputs":[{"name":"","type":"string"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"amount","type":"uint256"}],"name":"mint","outputs":[],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transfer","outputs":[{"name":"success","type":"bool"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"amount","type":"uint256"},{"name":"target","type":"address"}],"name":"mintFor","outputs":[],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_spender","type":"address"},{"name":"_value","type":"uint256"},{"name":"_extraData","type":"bytes"}],"name":"approveAndCall","outputs":[{"name":"success","type":"bool"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"_owner","type":"address"},{"name":"_spender","type":"address"}],"name":"allowance","outputs":[{"name":"remaining","type":"uint256"}],"payable":false,"type":"function"},{"inputs":[{"name":"_tokenName","type":"string"},{"name":"_tokenSymbol","type":"string"}],"payable":false,"type":"constructor"},{"payable":false,"type":"fallback"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_from","type":"address"},{"indexed":true,"name":"_to","type":"address"},{"indexed":false,"name":"_value","type":"uint256"}],"name":"Transfer","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_owner","type":"address"},{"indexed":true,"name":"_spender","type":"address"},{"indexed":false,"name":"_value","type":"uint256"}],"name":"Approval","type":"event"}];
+    var rtt_token_address = "0x0f114a1e9db192502e7856309cc899952b3db1ed";
+    var rtt_token = web3.eth.contract(rtt_token_abi).at(rtt_token_address);
+    console.log(rtt_token.mint({from: config.account.address}));
+    console.log(rtt_token.balanceOf(config.account.address).toString());
+
     let Bill = contract(bill_artifacts);
     let ATT = contract(att_artifacts);
     let Register = contract(register_artifacts);
@@ -37,7 +44,8 @@ async function dessert(){
 
     const owner = config.account.address;
     let accounts = web3.eth.accounts;
-    const beneficiary = '0xE83c90a780507B84cF08065DDA3Cc1976b172c25';
+    const beneficiary = config.beneficiary;
+    console.log("beneficiary: ", beneficiary);
     // const beneficiary = accounts[1];
     const gas = config.gas;
     const aiName = 'xiaoi';
@@ -49,12 +57,12 @@ async function dessert(){
     xiaoi.allEvents('', function(error, log){console.log(log);});
     web3.eth.filter('', function(error, log){console.log(log);})
 
-    // await bill.changeController(biz.address, {from:owner,gas:gas});    
-    // await register.register(aiName, bill.address,{from:owner,gas:gas});
-    // await att.generateTokens(owner,1000000,{from:owner,gas:gas});
-    // var a = await att.balanceOf(owner,{from:owner,gas:gas});
-    // console.log(a);
-    // await att.approve(bill.address, 100000,{from:owner,gas:gas});
+    await bill.changeController(biz.address, {from:owner,gas:gas});    
+    await register.register(aiName, bill.address,{from:owner,gas:gas});
+    await att.generateTokens(owner,1000000,{from:owner,gas:gas});
+    var a = await att.balanceOf(owner,{from:owner,gas:gas});
+    console.log(a);
+    await att.approve(bill.address, 100000,{from:owner,gas:gas});
     var b = await att.allowance(owner, bill.address, {from:owner,gas:gas,gasPrice:2e6});
     console.log(b);
     // let arg = {method: 'animalDetect', url: 'http://t2.27270.com/uploads/tu/201612/357/7.png'};
@@ -73,7 +81,7 @@ async function dessert(){
             var res = await d(args);
             const dataResult = JSON.stringify(res);
             console.log("dataResult: ", dataResult);
-            await biz.callFundsDeduct(aiName, --callID, true, dataResult.toString(), {from: owner,gas: gasLimit});
+            await biz.callFundsDeduct(aiName, --callID, true, dataResult.toString(), {from: owner,gas: gas});
             let ba = await att.balanceOf(owner,{from:owner,gas:gas});
             let be = await att.balanceOf(beneficiary,{from:owner,gas:gas});
             console.log(ba);

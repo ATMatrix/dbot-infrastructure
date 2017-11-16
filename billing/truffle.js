@@ -4,33 +4,25 @@ var mnemonic = "genre minor account boring throw blanket bird various hotel rota
 
 module.exports = {
   networks: {
-    development: {
-      host: "localhost",
-      port: 8545,
-      endpoint: 'http://localhost:8545',
+    bogong: {
+      host: "118.31.18.101",
+      port: 4049,
+      endpoint: 'http://118.31.18.101:4049',
       network_id: "*", // Match any network id
-      from: "0x3ae88fe370c39384fc16da2c9e768cf5d2495b48",
-      password: "542500611",    
+      from: "0xca9f427df31a1f5862968fad1fe98c0a9ee068c4",
+      password: "123456",    
       before_timeout: 30000000,             
       test_timeout: 30000000,
-      gas: 4.6e6,
+      gas: 4707808,
     },
-    bogong: {
-      host: "118.31.18.101", 
-      port: 8545,
-      endpoint: 'http://118.31.18.101:8545',
-      network_id: "3",       
-      gas: 4.6e6,
-      from: "0xD8D8cAB1a930cf68014B2da6CB0F932158377aA7",
-      password: "123456",
-    },
-    ropsten: {
+    kovan: {
       host: "118.31.18.101", 
       port: 4045,
       endpoint: 'http://118.31.18.101:4045',
-      network_id: "3",       
+      network_id: "*",       
       gas: 4.6e6,
-      from: "0xD8D8cAB1a930cf68014B2da6CB0F932158377aA7",
+      gasPrice: 0.02e12,
+      from: "0x47d1ba802dca4c88871dc594249905c42b7d21b7",
       password: "123456",
     }
     

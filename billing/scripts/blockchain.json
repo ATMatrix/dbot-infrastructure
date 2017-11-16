@@ -1,34 +1,35 @@
 {
   "development": {
-    "endpoint": "https://bogong.atmatrix.org",
+    "endpoint": "http://118.31.18.101:4045",
     "account": {
-      "address": "0xca9f427df31a1f5862968fad1fe98c0a9ee068c4",
+      "address": "0x47d1ba802dca4c88871dc594249905c42b7d21b7",
       "password": "123456"
     },
-    "gas": 1800000,
+    "gas": 4600000,
     "contracts": {
-      "register": "0x49cbe211ecad59cc686aed7eb03aaeb931dcfb53",
-      "biz": "0xb567feca64668ed0243ce64d767180a9fad700e7",
-      "consumer": "0xe47a8d40e2bded0d986bb258e331a086499a694c",
-      "att": "0xde6430355bfabd038e93f6f5aa9ccbf18925fc84",
-      "bill": "0x29a56daca724c834c95788343e6dec9a973634ac"
-    }
+      "register": "0xe5ea30efe7f35494b6261c830c0f92073bf002d7",
+      "biz": "0x44009ed0421c229706793e89f624a3f1e79f44e5",
+      "consumer": "0xf5e41b6b72b74fb80f4d48102c360c90b173df9a",
+      "att": "0x1ac1a4b25e3267ebd5d7539a8d19ed38939989f4",
+      "bill": "0xcab6dad89c61574e8eb7fa734157ca1ffe16dc6e"
+    },
+    "beneficiary": "0x00494640aa3b47ba667a8cdf06138f56b420f9a7"
   },
   "production": {},
   "test": {
     "endpoint": "http://118.31.18.101:4045",
     "account": {
-      "address": "0xD8D8cAB1a930cf68014B2da6CB0F932158377aA7",
+      "address": "0x47d1ba802dca4c88871dc594249905c42b7d21b7",
       "password": "123456"
     },
-    "gas": 4000000,
+    "gas": 4600000,
     "contracts": {
-      "register": "0x09b485e3c7ba37b2bd583ab709597f19b0216712",
-      "biz": "0x0527c8aa6f8ed08fee74836844a9e216db1b98de",
-      "consumer": "0xdc373859333da4aa006fb0de4bb00d12613fb904",
-      "att": "0x5e8d1232eecdae123d10353c42d087e396dce343",
-      "bill": "0x7d7cd5a6144a9cfb3f9ae95ccce8002ca292b6f6"
+      "register": "0x27788f7ae5115c55a9973be757d5dc7341a0ea39",
+      "biz": "0xd2c74179b422f593a275fee4d6b6adb67e2363b5",
+      "consumer": "0x5ca8997adae1394ec30dcca4792cf45a197161ad",
+      "att": "0x067d0f4d04b7be88f47e5c9e70c3785b95ab5e02",
+      "bill": "0x811a7496e256dadf40b40206f4304aff28ba8475"
     },
-    "beneficiary": "0xE83c90a780507B84cF08065DDA3Cc1976b172c25"
+    "beneficiary": "0x00494640aa3b47ba667a8cdf06138f56b420f9a7"
   }
 }
