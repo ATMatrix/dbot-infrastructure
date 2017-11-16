@@ -13,7 +13,7 @@ module.exports = {
       password: "123456",    
       before_timeout: 30000000,             
       test_timeout: 30000000,
-      gas: 4.6e6,
+      gas: 4707808,
     },
     kovan: {
       host: "118.31.18.101", 
