@@ -15,23 +15,15 @@ module.exports = {
       test_timeout: 30000000,
       gas: 4.6e6,
     },
-    ropsten: {
+    kovan: {
       host: "118.31.18.101", 
       port: 4045,
       endpoint: 'http://118.31.18.101:4045',
-      network_id: "3",       
+      network_id: "*",       
       gas: 4.6e6,
-      gasPrice: 0.05e13,
-      from: "0xD8D8cAB1a930cf68014B2da6CB0F932158377aA7",
+      gasPrice: 0.02e12,
+      from: "0x47d1ba802dca4c88871dc594249905c42b7d21b7",
       password: "123456",
-    },
-    infura: {
-      provider: new HDWalletProvider(mnemonic, "https://ropsten.infura.io/hDfusAJod3dkRnsLX5LY", 4),
-      network_id: 3,
-      from: "0xD8D8cAB1a930cf68014B2da6CB0F932158377aA7",
-      password: "123456",
-      gas: 4.6e6,
-      endpoint: 'https://ropsten.infura.io/hDfusAJod3dkRnsLX5LY',
     }
     
   }

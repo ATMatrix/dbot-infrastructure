@@ -18,17 +18,18 @@ const TruffleConfig = require('../truffle');
 
 const equivalent = {
   'bogong': 'development',
-  'ropsten': 'test',
+  'kovan': 'test',
   'prod': 'production'
 }
 
-const beneficiary = '0xbd2d69e3e68e1ab3944a865b3e566ca5c48740da';
+let beneficiary = '';
 const billingType = 1;
 const arg0 = 99;
 const arg1 = 0;
 const file = './scripts/blockchain.json'  
 
 module.exports =  function(deployer, network, accounts) {
+  beneficiary = accounts[0];
   const env = equivalent[network];    
   const config = TruffleConfig.networks[network];  
   fs.readJson(file)
