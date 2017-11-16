@@ -44,49 +44,50 @@ async function dessert(){
 
     const owner = config.account.address;
     let accounts = web3.eth.accounts;
-    const beneficiary = '0xE83c90a780507B84cF08065DDA3Cc1976b172c25';
+    const beneficiary = config.beneficiary;
+    console.log("beneficiary: ", beneficiary);
     // const beneficiary = accounts[1];
     const gas = config.gas;
     const aiName = 'xiaoi';
 
-    // bill.allEvents('', function(error, log){console.log(log);});
-    // att.allEvents('', function(error, log){console.log(log);});
-    // register.allEvents('', function(error, log){console.log(log);});
-    // biz.allEvents('', function(error, log){console.log(log);});
-    // xiaoi.allEvents('', function(error, log){console.log(log);});
-    // web3.eth.filter('', function(error, log){console.log(log);})
+    bill.allEvents('', function(error, log){console.log(log);});
+    att.allEvents('', function(error, log){console.log(log);});
+    register.allEvents('', function(error, log){console.log(log);});
+    biz.allEvents('', function(error, log){console.log(log);});
+    xiaoi.allEvents('', function(error, log){console.log(log);});
+    web3.eth.filter('', function(error, log){console.log(log);})
 
-    // await bill.changeController(biz.address, {from:owner,gas:gas});    
-    // await register.register(aiName, bill.address,{from:owner,gas:gas});
-    // await att.generateTokens(owner,1000000,{from:owner,gas:gas});
-    // var a = await att.balanceOf(owner,{from:owner,gas:gas});
-    // console.log(a);
-    // await att.approve(bill.address, 100000,{from:owner,gas:gas});
-    // var b = await att.allowance(owner, bill.address, {from:owner,gas:gas,gasPrice:2e6});
-    // console.log(b);
-    // // let arg = {method: 'animalDetect', url: 'http://t2.27270.com/uploads/tu/201612/357/7.png'};
-    // let arg = {
-    //     question:"你好!"
-    // }
-    // await xiaoi.callAI(aiName, JSON.stringify(arg), {from:owner,gas:gas});
-    // let callID = await biz.callAIID();
-    // console.log(callID);
-    // biz.EventFundsFrozen('', async function(error, result){
-    //     console.log(result)
-    //     if(!error){
-    //         let args = JSON.parse(result.args.arg);
-    //         console.log(args)
-    //         const d = require('../../worker/xiaoi')    
-    //         var res = await d(args);
-    //         const dataResult = JSON.stringify(res);
-    //         console.log("dataResult: ", dataResult);
-    //         await biz.callFundsDeduct(aiName, --callID, true, dataResult.toString(), {from: owner,gas: gasLimit});
-    //         let ba = await att.balanceOf(owner,{from:owner,gas:gas});
-    //         let be = await att.balanceOf(beneficiary,{from:owner,gas:gas});
-    //         console.log(ba);
-    //         console.log(be);
-    //     }
-    // })
+    await bill.changeController(biz.address, {from:owner,gas:gas});    
+    await register.register(aiName, bill.address,{from:owner,gas:gas});
+    await att.generateTokens(owner,1000000,{from:owner,gas:gas});
+    var a = await att.balanceOf(owner,{from:owner,gas:gas});
+    console.log(a);
+    await att.approve(bill.address, 100000,{from:owner,gas:gas});
+    var b = await att.allowance(owner, bill.address, {from:owner,gas:gas,gasPrice:2e6});
+    console.log(b);
+    // let arg = {method: 'animalDetect', url: 'http://t2.27270.com/uploads/tu/201612/357/7.png'};
+    let arg = {
+        question:"你好!"
+    }
+    await xiaoi.callAI(aiName, JSON.stringify(arg), {from:owner,gas:gas});
+    let callID = await biz.callAIID();
+    console.log(callID);
+    biz.EventFundsFrozen('', async function(error, result){
+        console.log(result)
+        if(!error){
+            let args = JSON.parse(result.args.arg);
+            console.log(args)
+            const d = require('../../worker/xiaoi')    
+            var res = await d(args);
+            const dataResult = JSON.stringify(res);
+            console.log("dataResult: ", dataResult);
+            await biz.callFundsDeduct(aiName, --callID, true, dataResult.toString(), {from: owner,gas: gas});
+            let ba = await att.balanceOf(owner,{from:owner,gas:gas});
+            let be = await att.balanceOf(beneficiary,{from:owner,gas:gas});
+            console.log(ba);
+            console.log(be);
+        }
+    })
 }
 
 dessert();
