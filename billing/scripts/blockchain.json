@@ -16,9 +16,9 @@
   },
   "production": {},
   "test": {
-    "endpoint": "http://118.31.18.101:4045",
+    "endpoint": "http://106.14.207.120:8545",
     "account": {
-      "address": "0xD8D8cAB1a930cf68014B2da6CB0F932158377aA7",
+      "address": "0x00A19c89eaD706d6b6b99450B7fab48AED724635",
       "password": "123456"
     },
     "gas": 4000000,

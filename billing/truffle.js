@@ -5,15 +5,15 @@ var mnemonic = "genre minor account boring throw blanket bird various hotel rota
 module.exports = {
   networks: {
     development: {
-      host: "localhost",
+      host: "106.14.207.120",
       port: 8545,
-      endpoint: 'http://localhost:8545',
-      network_id: "*", // Match any network id
-      from: "0x3ae88fe370c39384fc16da2c9e768cf5d2495b48",
-      password: "542500611",    
+      endpoint: 'http://106.14.207.120:8545',
+      network_id: "3", // Match any network id
+      from: "0x00eb5ca24922a29e25e748025c28e8a654339aea",
+      password: "123456",    
       before_timeout: 30000000,             
       test_timeout: 30000000,
-      gas: 4.6e6,
+      gas: 4707808,
     },
     bogong: {
       host: "118.31.18.101", 
