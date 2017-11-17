@@ -29,37 +29,7 @@ const arg1 = 0;
 const file = './scripts/blockchain.json'  
 
 module.exports =  function(deployer, network, accounts) {
-  beneficiary = accounts[0];
-  const env = equivalent[network];    
-  const config = TruffleConfig.networks[network];  
-  fs.readJson(file)
-  .then(blockchain => {
-    blockchain[env].endpoint = config.endpoint;
-    blockchain[env].account = {
-      address: config.from,
-      password: config.password
-    }
-    blockchain[env].gas = config.gas;
-    blockchain[env].beneficiary = beneficiary;
-    let contracts = {};
-    deployer.deploy(Register).then(function (params) {
-      contracts.register = Register.address;
-      deployer.deploy(AIBusinessController, Register.address).then(function () {
-        contracts.biz = AIBusinessController.address;
-        deployer.deploy(Consumer, AIBusinessController.address).then(function () {
-          contracts.consumer = Consumer.address;
-          deployer.deploy(ATT).then(function () {
-            contracts.att = ATT.address;
-            deployer.deploy(DbotBilling,ATT.address,beneficiary,billingType,arg0,arg1).then(function(){
-              contracts.bill = DbotBilling.address;
-              blockchain[env].contracts = contracts;
-              fs.outputJsonSync(file, blockchain);
-            });
-          });
-        });
-      })
-    })
-
+  // beneficiary = accounts[0];
   // const env = equivalent[network];    
   // const config = TruffleConfig.networks[network];  
   // fs.readJson(file)
@@ -71,8 +41,10 @@ module.exports =  function(deployer, network, accounts) {
   //   }
   //   blockchain[env].gas = config.gas;
   //   blockchain[env].beneficiary = beneficiary;
+
+  //   //all
   //   let contracts = {};
-  //   deployer.deploy(Register).then(function (params) {
+  //   deployer.deploy(Register).then(function () {
   //     contracts.register = Register.address;
   //     deployer.deploy(AIBusinessController, Register.address).then(function () {
   //       contracts.biz = AIBusinessController.address;
@@ -89,9 +61,5 @@ module.exports =  function(deployer, network, accounts) {
   //       });
   //     })
   //   })
-
-  // })
-  // .catch(err => {
-  //   console.error(err)
   // })
 };

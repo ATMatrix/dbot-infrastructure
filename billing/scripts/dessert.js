@@ -37,6 +37,9 @@ async function dessert(){
     Xiaoi.setProvider(provider);
 
     let bill = await Bill.at(config.contracts.bill);
+    let billFree = await Bill.at(config.billings.free);
+    let billTimes = await Bill.at(config.billings.times);
+    let billInterval = await Bill.at(config.billings.interval);
     let att = await ATT.at(config.contracts.att);
     let register = await Register.at(config.contracts.register);
     let biz = await Biz.at(config.contracts.biz);
@@ -51,6 +54,9 @@ async function dessert(){
     const aiName = 'xiaoi';
 
     bill.allEvents('', function(error, log){console.log(log);});
+    billFree.allEvents('', function(error, log){console.log(log);});
+    billTimes.allEvents('', function(error, log){console.log(log);});
+    billInterval.allEvents('', function(error, log){console.log(log);});
     att.allEvents('', function(error, log){console.log(log);});
     register.allEvents('', function(error, log){console.log(log);});
     biz.allEvents('', function(error, log){console.log(log);});
@@ -58,36 +64,53 @@ async function dessert(){
     web3.eth.filter('', function(error, log){console.log(log);})
 
     await bill.changeController(biz.address, {from:owner,gas:gas});    
-    await register.register(aiName, bill.address,{from:owner,gas:gas});
-    await att.generateTokens(owner,1000000,{from:owner,gas:gas});
-    var a = await att.balanceOf(owner,{from:owner,gas:gas});
-    console.log(a);
+    await billFree.changeController(biz.address, {from:owner,gas:gas});    
+    await billTimes.changeController(biz.address, {from:owner,gas:gas});    
+    await billInterval.changeController(biz.address, {from:owner,gas:gas});    
+    await register.register('xiaoi', bill.address,{from:owner,gas:gas});
+    await register.register('aliface', billFree.address,{from:owner,gas:gas});
+    await register.register('baiduImageClassify', billTimes.address,{from:owner,gas:gas});
+    await register.register('xunfei', billInterval.address,{from:owner,gas:gas});
+    await register.register('baiduNlp', billTimes.address,{from:owner,gas:gas});
+    // await att.generateTokens(owner,1000000,{from:owner,gas:gas});
+    // var a = await att.balanceOf(owner,{from:owner,gas:gas});
+    // console.log(a);
     await att.approve(bill.address, 100000,{from:owner,gas:gas});
-    var b = await att.allowance(owner, bill.address, {from:owner,gas:gas,gasPrice:2e6});
-    console.log(b);
-    // let arg = {method: 'animalDetect', url: 'http://t2.27270.com/uploads/tu/201612/357/7.png'};
-    let arg = {
-        question:"你好!"
-    }
-    await xiaoi.callAI(aiName, JSON.stringify(arg), {from:owner,gas:gas});
-    let callID = await biz.callAIID();
-    console.log(callID);
-    biz.EventFundsFrozen('', async function(error, result){
-        console.log(result)
-        if(!error){
-            let args = JSON.parse(result.args.arg);
-            console.log(args)
-            const d = require('../../worker/xiaoi')    
-            var res = await d(args);
-            const dataResult = JSON.stringify(res);
-            console.log("dataResult: ", dataResult);
-            await biz.callFundsDeduct(aiName, --callID, true, dataResult.toString(), {from: owner,gas: gas});
-            let ba = await att.balanceOf(owner,{from:owner,gas:gas});
-            let be = await att.balanceOf(beneficiary,{from:owner,gas:gas});
-            console.log(ba);
-            console.log(be);
-        }
-    })
+    var b = await att.allowance(owner, bill.address, {from:owner,gas:gas});
+    console.log(b)
+    await att.approve(billFree.address, 100000,{from:owner,gas:gas});
+    b = await att.allowance(owner, billFree.address, {from:owner,gas:gas});
+    console.log(b)
+    await att.approve(billTimes.address, 100000,{from:owner,gas:gas});
+    b = await att.allowance(owner, billTimes.address, {from:owner,gas:gas});
+    console.log(b)
+    await att.approve(billInterval.address, 100000,{from:owner,gas:gas});
+    b = await att.allowance(owner, billInterval.address, {from:owner,gas:gas});
+    console.log(b)
+    // console.log(b);
+    // // let arg = {method: 'animalDetect', url: 'http://t2.27270.com/uploads/tu/201612/357/7.png'};
+    // let arg = {
+    //     question:"你好!"
+    // }
+    // await xiaoi.callAI(aiName, JSON.stringify(arg), {from:owner,gas:gas});
+    // let callID = await biz.callAIID();
+    // console.log(callID);
+    // biz.EventFundsFrozen('', async function(error, result){
+    //     console.log(result)
+    //     if(!error){
+    //         let args = JSON.parse(result.args.arg);
+    //         console.log(args)
+    //         const d = require('../../worker/xiaoi')    
+    //         var res = await d(args);
+    //         const dataResult = JSON.stringify(res);
+    //         console.log("dataResult: ", dataResult);
+    //         await biz.callFundsDeduct(aiName, --callID, true, dataResult.toString(), {from: owner,gas: gas});
+    //         let ba = await att.balanceOf(owner,{from:owner,gas:gas});
+    //         let be = await att.balanceOf(beneficiary,{from:owner,gas:gas});
+    //         console.log(ba);
+    //         console.log(be);
+    //     }
+    // })
 }
 
 dessert();
