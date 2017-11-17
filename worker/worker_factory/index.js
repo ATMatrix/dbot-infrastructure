@@ -13,7 +13,7 @@ module.exports = class monitor {
     const contract = require("truffle-contract");
     const business_artifacts = require('../../billing/build/contracts/AIBusinessController.json');   
     const att_artifacts = require('../../billing/build/contracts/ATT.json');
-    
+     
     const config = blockchain;
     let endpoint = config.endpoint;
 
