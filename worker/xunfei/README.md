@@ -11,7 +11,14 @@ npm test
 ~~~
 ## Usage
 ~~~javascript
-const xunfei = require('./worker/xunfei')
+const XunFei = require('./worker/xunfei')
+
+const config = {
+  APP_ID: "xxx",
+  APP_KEY: "xxx"
+}
+
+const xunfei = new XunFei(config)
 
 const args = {
  question: '你好', // String, the question to ask
@@ -19,7 +26,7 @@ const args = {
 
 let result = null
 try {
-  result = await xunfei(args)
+  result = await xunfei.query(args)
 } catch (err) {
   console.log(err)
 }

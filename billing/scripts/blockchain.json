@@ -30,6 +30,11 @@
       "att": "0x067d0f4d04b7be88f47e5c9e70c3785b95ab5e02",
       "bill": "0x811a7496e256dadf40b40206f4304aff28ba8475"
     },
-    "beneficiary": "0x00494640aa3b47ba667a8cdf06138f56b420f9a7"
+    "beneficiary": "0x00494640aa3b47ba667a8cdf06138f56b420f9a7",
+    "billings": {
+      "free": "0xf91c915a90afb7e8dea2a921a9322b68d6da7357",
+      "times": "0x51c082c3ec7acd9af85a583586e69bcccd5e60ad",
+      "interval": "0x22312bbdaa487e7fab0072add6bc9fbb49a991da"
+    }
   }
 }

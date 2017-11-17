@@ -11,7 +11,15 @@ npm test
 ~~~
 ## Usage
 ~~~javascript
-const nlp = require('./worker/baiduNlp')
+const BaiduNlp = require('./worker/baiduNlp')
+
+const config = {
+  APP_ID: "xxx",
+  API_KEY: "xxx",
+  SECRET_KEY: "xxx"
+}
+
+const nlp = new BaiduNlp(config)
 
 const args = {
   text: 'Today is nice!', // String, text to be process(required)
@@ -20,7 +28,7 @@ const args = {
 
 let result = null
 try {
-  result = await nlp(args)
+  result = await nlp.query(args)
 } catch (err) {
   console.log(err)
 }

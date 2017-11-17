@@ -11,7 +11,15 @@ npm test
 ~~~
 ## Usage
 ~~~javascript
-const ocr = require('./worker/baiduOcr')
+const BaiduOcr = require('./worker/baiduOcr')
+
+const config = {
+  APP_ID: 'xxx',
+  API_KEY: 'xxx',
+  SECRET_KEY: 'xxx'
+}
+
+const orc = new BaiduOcr(config)
 
 const args = {
   url: 'http://www.images.com/some_image.jpg', // String, address of the image
@@ -21,7 +29,7 @@ const args = {
 
 let result = null
 try {
-  result = await ocr(args)
+  result = await ocr.query(args)
 } catch (err) {
   console.log(err)
 }

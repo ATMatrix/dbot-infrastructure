@@ -11,7 +11,14 @@ npm test
 ~~~
 ## Usage
 ~~~javascript
-const aliface = require('./worker/aliface')
+const AliFace = require('./worker/aliface')
+
+const config = {
+  API_KEY: 'xxx',
+  API_SECRET: 'xxx',
+}
+
+const aliface = new AliFace(config)
 
 const args = {
   url: 'http://www.images.com/some_image.jpg', // String, address of the image
@@ -20,7 +27,7 @@ const args = {
 
 let result = null
 try {
-  result = await aliface(args)
+  result = await aliface.query(args)
 } catch (err) {
   console.log(err)
 }
