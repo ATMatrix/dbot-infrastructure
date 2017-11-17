@@ -41,7 +41,7 @@ async function freeze(){
   console.log("beneficiary: ", beneficiary);
   // const beneficiary = accounts[1];
   const gas = config.gas;
-  const aiName = 'baiduNlp';
+  const aiName = 'xiaoi';
 
   bill.allEvents('', function(error, log){console.log(log);});
   att.allEvents('', function(error, log){console.log(log);});
@@ -58,11 +58,14 @@ async function freeze(){
   await att.approve(bill.address, 100000,{from:owner,gas:gas});
   var b = await att.allowance(owner, bill.address, {from:owner,gas:gas,gasPrice:2e6});
   console.log(b);
+  // let arg = {method: 'idcard', url: 'http://imgsrc.baidu.com/imgad/pic/item/bd3eb13533fa828bbd0022d9f61f4134970a5aec.jpg'};
   // let arg = {method: 'animalDetect', url: 'http://t2.27270.com/uploads/tu/201612/357/7.png'};
   // let arg = {method: 'animalDetect', url: 'http://t2.hddhhn.com/uploads/tu/201612/357/7.png'};
-  let arg = {
-    text: '气死我了！'
-  }
+  // let arg = {
+  //   text: '气死我了！'
+  // }
+  let arg = { question: '你是谁？' };
+
   await xiaoi.callAI(aiName, JSON.stringify(arg), {from:owner,gas:gas});
   let callID = await biz.callAIID();
   console.log(callID);
