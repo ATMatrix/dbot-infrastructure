@@ -1,15 +1,6 @@
 const rp = require('request-promise')
 const OcrClient = require("baidu-aip-sdk").ocr
 
-const config = require('./config')
-
-const {
-  APP_ID,
-  API_KEY,
-  SECRET_KEY
-} = config
-
-const client = new OcrClient(APP_ID, API_KEY, SECRET_KEY)
 
 const methods = [
   'generalBasic',
@@ -29,19 +20,29 @@ const methods = [
   'businessLicense',
 ]
 
-module.exports = async ({
-  method = 'generalBasic',
-  url,
-  options,
-} = {}) => {
-  if (!url) throw 'url of image required'
-  if (methods.indexOf(method) === -1)
-    throw `method must in ${JSON.stringify(methods)}`
+module.exports = class BaiduOrc {
+  constructor(config = {}) {
+    this.client = new OcrClient(
+      config.APP_ID,
+      config.API_KEY,
+      config.SECRET_KEY
+    )
+  }
 
-  const image = await fetchImage(url)
-  const result = await client[method](image, options)
+  async query({
+    method = 'generalBasic',
+    url,
+    options,
+  } = {}) {
+    if (!url) throw 'url of image required'
+    if (methods.indexOf(method) === -1)
+      throw `method must in ${JSON.stringify(methods)}`
 
-  return result
+    const image = await fetchImage(url)
+    const result = await this.client[method](image, options)
+
+    return result
+  }
 }
 
 async function fetchImage(url) {

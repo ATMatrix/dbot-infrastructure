@@ -1,3 +1,6 @@
-const nlp = require('./index.js')
+const Nlp = require('./index.js')
+const config = require('./config.json')
 
-nlp({text: '气死我了！'}).then(console.log, console.log)
+const nlp = new Nlp(config)
+
+nlp.query({text: '气死我了！'}).then(console.log, console.log)
