@@ -67,11 +67,11 @@ async function dessert(){
     await billFree.changeController(biz.address, {from:owner,gas:gas});    
     await billTimes.changeController(biz.address, {from:owner,gas:gas});    
     await billInterval.changeController(biz.address, {from:owner,gas:gas});    
-    await register.register('xiaoi', bill.address,{from:owner,gas:gas});
-    await register.register('aliface', billFree.address,{from:owner,gas:gas});
-    await register.register('baiduImageClassify', billTimes.address,{from:owner,gas:gas});
-    await register.register('xunfei', billInterval.address,{from:owner,gas:gas});
-    await register.register('baiduNlp', billTimes.address,{from:owner,gas:gas});
+    await register.register('XIAO_I', bill.address,{from:owner,gas:gas});
+    await register.register('ALI_FACE', billFree.address,{from:owner,gas:gas});
+    await register.register('BAIDU_OCR', billTimes.address,{from:owner,gas:gas});
+    await register.register('XUN_FEI', billInterval.address,{from:owner,gas:gas});
+    await register.register('BAIDU_NLP', billTimes.address,{from:owner,gas:gas});
     // await att.generateTokens(owner,1000000,{from:owner,gas:gas});
     // var a = await att.balanceOf(owner,{from:owner,gas:gas});
     // console.log(a);
