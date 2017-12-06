@@ -22,6 +22,13 @@ const equivalent = {
   'prod': 'production'
 }
 
+const BILLING_TYPE = {
+    Free:0,
+    Times:1,
+    Interval:2,
+    Other:3
+}
+
 let beneficiary = '';
 const file = './scripts/blockchain.json'  
 

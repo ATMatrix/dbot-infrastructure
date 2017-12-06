@@ -69,7 +69,7 @@ async function dessert(){
     await billInterval.changeController(biz.address, {from:owner,gas:gas});    
     await register.register('xiaoi', bill.address,{from:owner,gas:gas});
     await register.register('aliface', billFree.address,{from:owner,gas:gas});
-    await register.register('baiduImageClassify', billTimes.address,{from:owner,gas:gas});
+    await register.register('baiduOcr', billTimes.address,{from:owner,gas:gas});
     await register.register('xunfei', billInterval.address,{from:owner,gas:gas});
     await register.register('baiduNlp', billTimes.address,{from:owner,gas:gas});
     // await att.generateTokens(owner,1000000,{from:owner,gas:gas});
