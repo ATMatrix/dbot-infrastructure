@@ -1,0 +1,16 @@
+{
+  "name": "awsrekognition",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "aws-sdk": "^2.165.0",
+    "request": "^2.83.0",
+    "request-promise": "^4.2.2"
+  }
+}
