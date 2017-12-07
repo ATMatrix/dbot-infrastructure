@@ -41,7 +41,7 @@ async function freeze(){
   console.log("beneficiary: ", beneficiary);
   // const beneficiary = accounts[1];
   const gas = config.gas;
-  const aiName = 'googleLanguage';
+  const aiName = 'awsRekognition';
 
   bill.allEvents('', function(error, log){console.log(log);});
   att.allEvents('', function(error, log){console.log(log);});
@@ -69,7 +69,8 @@ async function freeze(){
   // }
   // let arg = { question: '你是谁？' };
   // let arg = {url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQyfICYqipacWJlAPf9TszyZu6JcGnojKXqqlGm-Jp8JR-TdpqaCg'};
-  let arg = {text: 'Oh my god!'};
+  // let arg = {text: 'Oh my god!'};
+  let arg = { url: 'http://pngimg.com/uploads/brad_pitt/brad_pitt_PNG28.png' };
   console.log("callAI start");
   await xiaoi.callAI(aiName, JSON.stringify(arg), {from:owner,gas:gas});
   let callID = await biz.callAIID();
