@@ -17,7 +17,7 @@
   },
   "scripts": {
     "start": "NODE_ENV=production node run.js",
-    "test": "NODE_ENV=test bash run.sh",
+    "test": "NODE_ENV=test node ibmToneAnalyze/run.js",
     "dev": "NODE_ENV=development node run.js"
   },
   "devDependencies": {

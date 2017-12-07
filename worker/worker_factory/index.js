@@ -1,4 +1,4 @@
-const blockchain = require("../util").blockchain
+const blockchain = require("../util")
 console.log(blockchain)
 
 module.exports = class monitor {

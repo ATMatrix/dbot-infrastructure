@@ -41,7 +41,7 @@ async function freeze(){
   console.log("beneficiary: ", beneficiary);
   // const beneficiary = accounts[1];
   const gas = config.gas;
-  const aiName = 'xiaoi';
+  const aiName = 'ibmToneAnalyze';
 
   bill.allEvents('', function(error, log){console.log(log);});
   att.allEvents('', function(error, log){console.log(log);});
@@ -50,7 +50,10 @@ async function freeze(){
   xiaoi.allEvents('', function(error, log){console.log(log);});
   web3.eth.filter('', function(error, log){console.log(log);})
 
-  await bill.changeController(biz.address, {from:owner,gas:gas});    
+  var a = await att.balanceOf(owner,{from:owner,gas:gas});
+  console.log(a);
+
+  console.log(await bill.changeController(biz.address, {from:owner,gas:gas}));    
   await register.register(aiName, bill.address,{from:owner,gas:gas});
   // await att.generateTokens(owner,1000000,{from:owner,gas:gas});
   var a = await att.balanceOf(owner,{from:owner,gas:gas});
@@ -64,8 +67,10 @@ async function freeze(){
   // let arg = {
   //   text: '气死我了！'
   // }
-  let arg = { question: '你是谁？' };
-
+  // let arg = { question: '你是谁？' };
+  // let arg = {url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQyfICYqipacWJlAPf9TszyZu6JcGnojKXqqlGm-Jp8JR-TdpqaCg'};
+  let arg = {text: 'Oh my god!'};
+  console.log("callAI start");
   await xiaoi.callAI(aiName, JSON.stringify(arg), {from:owner,gas:gas});
   let callID = await biz.callAIID();
   console.log(callID);
