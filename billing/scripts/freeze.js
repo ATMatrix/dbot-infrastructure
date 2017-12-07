@@ -41,7 +41,7 @@ async function freeze(){
   console.log("beneficiary: ", beneficiary);
   // const beneficiary = accounts[1];
   const gas = config.gas;
-  const aiName = 'ibmToneAnalyze';
+  const aiName = 'googleLanguage';
 
   bill.allEvents('', function(error, log){console.log(log);});
   att.allEvents('', function(error, log){console.log(log);});
