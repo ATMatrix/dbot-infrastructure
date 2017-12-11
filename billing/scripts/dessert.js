@@ -67,11 +67,16 @@ async function dessert(){
     await billFree.changeController(biz.address, {from:owner,gas:gas});    
     await billTimes.changeController(biz.address, {from:owner,gas:gas});    
     await billInterval.changeController(biz.address, {from:owner,gas:gas});    
-    await register.register('XIAO_I', bill.address,{from:owner,gas:gas});
-    await register.register('ALI_FACE', billFree.address,{from:owner,gas:gas});
-    await register.register('BAIDU_OCR', billTimes.address,{from:owner,gas:gas});
-    await register.register('XUN_FEI', billInterval.address,{from:owner,gas:gas});
-    await register.register('BAIDU_NLP', billTimes.address,{from:owner,gas:gas});
+    // await register.register('XIAO_I', bill.address,{from:owner,gas:gas});
+    // await register.register('ALI_FACE', billFree.address,{from:owner,gas:gas});
+    // await register.register('BAIDU_OCR', billTimes.address,{from:owner,gas:gas});
+    // await register.register('XUN_FEI', billInterval.address,{from:owner,gas:gas});
+    // await register.register('BAIDU_NLP', billTimes.address,{from:owner,gas:gas});
+    await register.register('AWS_REKOGNITION', billInterval.address,{from:owner,gas:gas});
+    await register.register('AZURE_VISION', billTimes.address,{from:owner,gas:gas});
+    await register.register('GOOGLE_LANGUAGE', bill.address,{from:owner,gas:gas});
+    await register.register('IBM_TONE_ANALYZER', billTimes.address,{from:owner,gas:gas});
+
     // await att.generateTokens(owner,1000000,{from:owner,gas:gas});
     // var a = await att.balanceOf(owner,{from:owner,gas:gas});
     // console.log(a);

@@ -1,5 +1,9 @@
 forever start XIAO_I/run.js
-forever start baiduOcr/run.js
-forever start aliface/run.js
-forever start baiduNlp/run.js
-forever start xunfei/run.js
+forever start BAIDU_OCR/run.js
+forever start ALI_FACE/run.js
+forever start BAIDU_NLP/run.js
+forever start XUN_FEI/run.js
+forever start AWS_REKOGNITION/run.js
+forever start AZURE_VISION/run.js
+forever start GOOGLE_LANGUAGE/run.js
+forever start IBM_TONE_ANALYZER/run.js
