@@ -1,40 +1,41 @@
 {
-  "development": {
-    "endpoint": "http://118.31.18.101:4045",
-    "account": {
-      "address": "0x47d1ba802dca4c88871dc594249905c42b7d21b7",
-      "password": "123456"
+    "development": {
+        "endpoint": "http://118.31.18.101:4045",
+        "account": {
+            "address": "0x47d1ba802dca4c88871dc594249905c42b7d21b7",
+            "password": "123456"
+        },
+        "gas": 4600000,
+        "contracts": {
+            "register": "0xe5ea30efe7f35494b6261c830c0f92073bf002d7",
+            "biz": "0x44009ed0421c229706793e89f624a3f1e79f44e5",
+            "consumer": "0xf5e41b6b72b74fb80f4d48102c360c90b173df9a",
+            "att": "0x1ac1a4b25e3267ebd5d7539a8d19ed38939989f4",
+            "bill": "0xcab6dad89c61574e8eb7fa734157ca1ffe16dc6e"
+        },
+        "beneficiary": "0x00494640aa3b47ba667a8cdf06138f56b420f9a7"
     },
-    "gas": 4600000,
-    "contracts": {
-      "register": "0xe5ea30efe7f35494b6261c830c0f92073bf002d7",
-      "biz": "0x44009ed0421c229706793e89f624a3f1e79f44e5",
-      "consumer": "0xf5e41b6b72b74fb80f4d48102c360c90b173df9a",
-      "att": "0x1ac1a4b25e3267ebd5d7539a8d19ed38939989f4",
-      "bill": "0xcab6dad89c61574e8eb7fa734157ca1ffe16dc6e"
-    },
-    "beneficiary": "0x00494640aa3b47ba667a8cdf06138f56b420f9a7"
-  },
-  "production": {},
-  "test": {
-    "endpoint": "http://118.31.18.101:4045",
-    "account": {
-      "address": "0x47d1ba802dca4c88871dc594249905c42b7d21b7",
-      "password": "123456"
-    },
-    "gas": 4600000,
-    "contracts": {
-      "register": "0x27788f7ae5115c55a9973be757d5dc7341a0ea39",
-      "biz": "0xd2c74179b422f593a275fee4d6b6adb67e2363b5",
-      "consumer": "0x5ca8997adae1394ec30dcca4792cf45a197161ad",
-      "att": "0x067d0f4d04b7be88f47e5c9e70c3785b95ab5e02",
-      "bill": "0x811a7496e256dadf40b40206f4304aff28ba8475"
-    },
-    "beneficiary": "0x00494640aa3b47ba667a8cdf06138f56b420f9a7",
-    "billings": {
-      "free": "0xf91c915a90afb7e8dea2a921a9322b68d6da7357",
-      "times": "0x51c082c3ec7acd9af85a583586e69bcccd5e60ad",
-      "interval": "0x22312bbdaa487e7fab0072add6bc9fbb49a991da"
+    "production": {},
+    "test": {
+        "endpoint": "http://118.31.18.101:4045",
+        "account": {
+            "address": "0x47d1ba802dca4c88871dc594249905c42b7d21b7",
+            "password": "123456"
+        },
+        "gas": 4600000,
+        "contracts": {
+            "register": "0x27788f7ae5115c55a9973be757d5dc7341a0ea39",
+            "biz": "0xd2c74179b422f593a275fee4d6b6adb67e2363b5",
+            "consumer": "0x5ca8997adae1394ec30dcca4792cf45a197161ad",
+            "att": "0xa649c2ba1fbf6984e934cea9dc6c7c2a7af379f7",
+            "bill": "0x811a7496e256dadf40b40206f4304aff28ba8475",
+            "uraiden": "0x1ea293cb5a28b2447383056b23ec79d768afa5c0"
+        },
+        "beneficiary": "0x00494640aa3b47ba667a8cdf06138f56b420f9a7",
+        "billings": {
+            "free": "0xf91c915a90afb7e8dea2a921a9322b68d6da7357",
+            "times": "0x51c082c3ec7acd9af85a583586e69bcccd5e60ad",
+            "interval": "0x22312bbdaa487e7fab0072add6bc9fbb49a991da"
+        }
     }
-  }
 }

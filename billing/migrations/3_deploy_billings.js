@@ -33,40 +33,40 @@ let beneficiary = '';
 const file = './scripts/blockchain.json'  
 
 module.exports =  function(deployer, network, accounts) {
-  beneficiary = accounts[0];
-  const env = equivalent[network];    
-  const config = TruffleConfig.networks[network];  
-  fs.readJson(file)
-  .then(blockchain => {
-    beneficiary = blockchain[env].beneficiary;
-    console.log(beneficiary)
-    //billings
-    let contracts = blockchain[env].contracts;
-    let att = contracts.att;
-    let billings = {};
-    console.log(contracts)
-    {
-        let billingType = 0;
-        let arg0 = 0;
-        let arg1 = 0;
-        deployer.deploy(DbotBilling,att,beneficiary,billingType,arg0,arg1).then(function(){
-            billings.free = DbotBilling.address;
-            billingType = 1;
-            arg0 = 98;
-            arg1 = 5;
-            deployer.deploy(DbotBilling,att,beneficiary,billingType,arg0,arg1).then(function () {
-                billings.times = DbotBilling.address;
-                billingType = 2
-                arg0 = 97;
-                arg1 = 0;
-                deployer.deploy(DbotBilling,att,beneficiary,billingType,arg0,arg1).then(function () {
-                    billings.interval = DbotBilling.address;
-                    blockchain[env].billings = billings;
-                    fs.outputJsonSync(file, blockchain);
-                })
-            })
-        });
-    }
+//   beneficiary = accounts[0];
+//   const env = equivalent[network];    
+//   const config = TruffleConfig.networks[network];  
+//   fs.readJson(file)
+//   .then(blockchain => {
+//     beneficiary = blockchain[env].beneficiary;
+//     console.log(beneficiary)
+//     //billings
+//     let contracts = blockchain[env].contracts;
+//     let att = contracts.att;
+//     let billings = {};
+//     console.log(contracts)
+//     {
+//         let billingType = 0;
+//         let arg0 = 0;
+//         let arg1 = 0;
+//         deployer.deploy(DbotBilling,att,beneficiary,billingType,arg0,arg1).then(function(){
+//             billings.free = DbotBilling.address;
+//             billingType = 1;
+//             arg0 = 98;
+//             arg1 = 5;
+//             deployer.deploy(DbotBilling,att,beneficiary,billingType,arg0,arg1).then(function () {
+//                 billings.times = DbotBilling.address;
+//                 billingType = 2
+//                 arg0 = 97;
+//                 arg1 = 0;
+//                 deployer.deploy(DbotBilling,att,beneficiary,billingType,arg0,arg1).then(function () {
+//                     billings.interval = DbotBilling.address;
+//                     blockchain[env].billings = billings;
+//                     fs.outputJsonSync(file, blockchain);
+//                 })
+//             })
+//         });
+//     }
     
-  })
+//   })
 };
