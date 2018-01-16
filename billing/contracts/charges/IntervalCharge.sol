@@ -40,7 +40,7 @@ contract IntervalCharge is Charge, Ownable {
           }
     }
 
-    function getPrice(uint256, address _from) onlyOwner public returns (uint256) {
+    function getPrice(address _from) onlyOwner public returns (uint256) {
         return isFree(_from) ? 0 : amount;
     }
 

@@ -4,7 +4,7 @@ contract BillingBasic {
 
     function billing(address _from, uint256 _callID) public returns (bool);
 
-    function getPrice(uint256 _callID, address _from) public returns (uint256);
+    function getPrice(address _from) public returns (uint256);
 
     function freezeToken(uint256 _callID) public returns (bool);
 

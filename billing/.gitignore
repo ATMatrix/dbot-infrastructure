@@ -5,3 +5,4 @@ installed_contracts/
 package-lock.json
 scripts/deployedAddress.json
 .idea/
+.DS_Store
