@@ -32,9 +32,9 @@
         },
         "beneficiary": "0x04dd4184424c2767d2bdb44725648eee2df31fc2",
         "billings": {
-            "free": "0xf91c915a90afb7e8dea2a921a9322b68d6da7357",
-            "times": "0x51c082c3ec7acd9af85a583586e69bcccd5e60ad",
-            "interval": "0x22312bbdaa487e7fab0072add6bc9fbb49a991da"
+            "free": "0xf46b4894cf5018a3a00104f390408ca7e2e63951",
+            "times": "0xa99782d73844729822603bf1a7574389dd1427fc",
+            "interval": "0x7d3af379fd9eed882051e561fdfc62dec9076d19"
         }
     }
 }

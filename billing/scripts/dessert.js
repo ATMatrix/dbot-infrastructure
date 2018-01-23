@@ -37,9 +37,9 @@ async function dessert(){
     Xiaoi.setProvider(provider);
 
     let bill = await Bill.at(config.contracts.bill);
-    // let billFree = await Bill.at(config.billings.free);
-    // let billTimes = await Bill.at(config.billings.times);
-    // let billInterval = await Bill.at(config.billings.interval);
+    let billFree = await Bill.at(config.billings.free);
+    let billTimes = await Bill.at(config.billings.times);
+    let billInterval = await Bill.at(config.billings.interval);
     let atn = await ATN.at(config.contracts.att);
     let register = await Register.at(config.contracts.register);
     let biz = await Biz.at(config.contracts.biz);
@@ -54,9 +54,9 @@ async function dessert(){
     const aiName = 'XIAO_I';
 
     bill.allEvents('', function(error, log){console.log(log);});
-    // billFree.allEvents('', function(error, log){console.log(log);});
-    // billTimes.allEvents('', function(error, log){console.log(log);});
-    // billInterval.allEvents('', function(error, log){console.log(log);});
+    billFree.allEvents('', function(error, log){console.log(log);});
+    billTimes.allEvents('', function(error, log){console.log(log);});
+    billInterval.allEvents('', function(error, log){console.log(log);});
     atn.allEvents('', function(error, log){console.log(log);});
     register.allEvents('', function(error, log){console.log(log);});
     biz.allEvents('', function(error, log){console.log(log);});
@@ -64,25 +64,26 @@ async function dessert(){
     web3.eth.filter('', function(error, log){console.log(log);})
 
     await bill.changeController(biz.address, {from:owner,gas:gas});    
-    // await billFree.changeController(biz.address, {from:owner,gas:gas});    
-    // await billTimes.changeController(biz.address, {from:owner,gas:gas});    
-    // await billInterval.changeController(biz.address, {from:owner,gas:gas});    
-    await register.register('XIAO_I', bill.address,{from:owner,gas:gas});
-    // await register.register('ALI_FACE', billFree.address,{from:owner,gas:gas});
-    // await register.register('BAIDU_OCR', billTimes.address,{from:owner,gas:gas});
-    // await register.register('XUN_FEI', billInterval.address,{from:owner,gas:gas});
-    // await register.register('BAIDU_NLP', billTimes.address,{from:owner,gas:gas});
-    // await register.register('AWS_REKOGNITION', billInterval.address,{from:owner,gas:gas});
-    // await register.register('AZURE_VISION', billTimes.address,{from:owner,gas:gas});
-    // await register.register('GOOGLE_LANGUAGE', bill.address,{from:owner,gas:gas});
-    // await register.register('IBM_TONE_ANALYZER', billTimes.address,{from:owner,gas:gas});
+    await billFree.changeController(biz.address, {from:owner,gas:gas});    
+    await billTimes.changeController(biz.address, {from:owner,gas:gas});    
+    await billInterval.changeController(biz.address, {from:owner,gas:gas});    
+    await register.register('xiaoi', bill.address,{from:owner,gas:gas});
+    await register.register('aliface', billFree.address,{from:owner,gas:gas});
+    await register.register('baiduOcr', billTimes.address,{from:owner,gas:gas});
+    await register.register('xunfei', billInterval.address,{from:owner,gas:gas});
+    await register.register('baiduNlp', billTimes.address,{from:owner,gas:gas});
+    await register.register('awsRekognition', billInterval.address,{from:owner,gas:gas});
+    await register.register('azureVision', billTimes.address,{from:owner,gas:gas});
+    await register.register('googleLanguage', bill.address,{from:owner,gas:gas});
+    await register.register('ibmToneAnalyzer', billTimes.address,{from:owner,gas:gas});
 
-    await atn.mint(owner,1000000,{from:owner,gas:gas});
-    var a = await atn.balanceOf(owner,{from:owner,gas:gas});
-    console.log(a);
-    await atn.approve(bill.address, 100000,{from:owner,gas:gas});
-    var b = await atn.allowance(owner, bill.address, {from:owner,gas:gas});
-    console.log(b)
+    // console.log(owner)
+    // await atn.mint(owner,1000000,{from:owner,gas:gas});
+    // var a = await atn.balanceOf(owner,{from:owner,gas:gas});
+    // console.log(a);
+    // await atn.approve(bill.address, 100000,{from:owner,gas:gas});
+    // var b = await atn.allowance(owner, bill.address, {from:owner,gas:gas});
+    // console.log(b)
     // await att.approve(billFree.address, 100000,{from:owner,gas:gas});
     // b = await att.allowance(owner, billFree.address, {from:owner,gas:gas});
     // console.log(b)
@@ -94,34 +95,34 @@ async function dessert(){
     // console.log(b)
     // console.log(b);
     // // let arg = {method: 'animalDetect', url: 'http://t2.27270.com/uploads/tu/201612/357/7.png'};
-    let arg = {
-        question:"你好!"
-    }
-    let receipt = await xiaoi.callAI(aiName, JSON.stringify(arg), {from:owner,gas:gas});
-    console.log("receipt", receipt)
-    let callID = await biz.callAIID();
-    console.log(callID);
+    // let arg = {
+    //     question:"你好!"
+    // }
+    // let receipt = await xiaoi.callAI(aiName, JSON.stringify(arg), {from:owner,gas:gas});
+    // console.log("receipt", receipt)
+    // let callID = await biz.callAIID();
+    // console.log(callID);
 
-    let fee = await biz.getPrice.call(aiName, owner,{from: owner,gas: gas});
-    console.log("fee", fee);
-    biz.EventFundsFrozen('', async function(error, result){
-        console.log(result)
-        if(!error){
-            let args = JSON.parse(result.args.arg);
-            console.log(args)
-            const Q = require('../../worker/XIAO_I')  
-            const conf = require('../../worker/XIAO_I/config.json')  
-            const q = new Q(conf)
-            var res = await q.query(args);
-            const dataResult = JSON.stringify(res);
-            console.log("dataResult: ", dataResult);
-            await biz.callFundsDeduct(aiName, --callID, true, dataResult.toString(), {from: owner,gas: gas});
-            let ba = await atn.balanceOf(owner,{from:owner,gas:gas});
-            let be = await atn.balanceOf(beneficiary,{from:owner,gas:gas});
-            console.log(ba);
-            console.log(be);
-        }
-    })
+    // let fee = await biz.getPrice.call(aiName, owner,{from: owner,gas: gas});
+    // console.log("fee", fee);
+    // biz.EventFundsFrozen('', async function(error, result){
+    //     console.log(result)
+    //     if(!error){
+    //         let args = JSON.parse(result.args.arg);
+    //         console.log(args)
+    //         const Q = require('../../worker/XIAO_I')  
+    //         const conf = require('../../worker/XIAO_I/config.json')  
+    //         const q = new Q(conf)
+    //         var res = await q.query(args);
+    //         const dataResult = JSON.stringify(res);
+    //         console.log("dataResult: ", dataResult);
+    //         await biz.callFundsDeduct(aiName, --callID, true, dataResult.toString(), {from: owner,gas: gas});
+    //         let ba = await atn.balanceOf(owner,{from:owner,gas:gas});
+    //         let be = await atn.balanceOf(beneficiary,{from:owner,gas:gas});
+    //         console.log(ba);
+    //         console.log(be);
+    //     }
+    // })
 }
 
 dessert();
