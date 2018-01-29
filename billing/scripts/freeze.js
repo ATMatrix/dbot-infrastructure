@@ -41,7 +41,7 @@ async function freeze(){
   console.log("beneficiary: ", beneficiary);
   // const beneficiary = accounts[1];
   const gas = config.gas;
-  const aiName = 'xiaoi';
+  const aiName = 'baiduNlp';
 
   bill.allEvents('', function(error, log){console.log(log);});
   att.allEvents('', function(error, log){console.log(log);});
@@ -64,12 +64,12 @@ async function freeze(){
   // let arg = {method: 'idcard', url: 'http://imgsrc.baidu.com/imgad/pic/item/bd3eb13533fa828bbd0022d9f61f4134970a5aec.jpg'};
   // let arg = {method: 'animalDetect', url: 'http://t2.27270.com/uploads/tu/201612/357/7.png'};
   // let arg = {method: 'animalDetect', url: 'http://t2.hddhhn.com/uploads/tu/201612/357/7.png'};
-  // let arg = {
-  //   text: '气死我了！'
-  // }
+  let arg = {
+    text: '气死我了！'
+  }
   // let arg = { question: '你是谁？' };
   // let arg = {url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQyfICYqipacWJlAPf9TszyZu6JcGnojKXqqlGm-Jp8JR-TdpqaCg'};
-  let arg = {text: 'Oh my god!'};
+  // let arg = {text: 'Oh my god!'};
   // let arg = { url: 'http://pngimg.com/uploads/brad_pitt/brad_pitt_PNG28.png' };
   console.log("callAI start");
   await xiaoi.callAI(aiName, JSON.stringify(arg), {from:owner,gas:gas});
