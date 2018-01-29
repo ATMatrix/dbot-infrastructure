@@ -1,5 +1,5 @@
 const monitor = require("../worker_factory")
 const config = require('../config.json').aliface
 
-let aliface = new monitor("aliFace", config)
+let aliface = new monitor("aliface", config)
 aliface.run();
