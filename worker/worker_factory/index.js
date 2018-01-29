@@ -1,5 +1,5 @@
 const blockchain = require("../util")
-console.log(blockchain)
+console.log("blockchain", blockchain)
 
 module.exports = class monitor {
 
