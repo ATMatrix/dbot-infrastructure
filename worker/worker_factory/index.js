@@ -125,6 +125,8 @@ module.exports = class monitor {
          
        }
          }
+
+         console.log("callai err: ", err);
   
   })
   }
