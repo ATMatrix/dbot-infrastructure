@@ -24,18 +24,17 @@
         },
         "gas": 4600000,
         "contracts": {
-            "register": "0x27788f7ae5115c55a9973be757d5dc7341a0ea39",
-            "biz": "0xd2c74179b422f593a275fee4d6b6adb67e2363b5",
-            "consumer": "0x5ca8997adae1394ec30dcca4792cf45a197161ad",
+            "register": "0xf8a9c5e77a8a97d33ff6fdbc595dbc965616e49a",
+            "biz": "0x99f42c7c49f32b2ba8b6037ca513f81724e800dc",
+            "consumer": "0x853917d98bd9e60d9e26e83fd757fd4adc098532",
             "att": "0xa649c2ba1fbf6984e934cea9dc6c7c2a7af379f7",
-            "bill": "0x811a7496e256dadf40b40206f4304aff28ba8475",
-            "uraiden": "0x1ea293cb5a28b2447383056b23ec79d768afa5c0"
+            "bill": "0x77f0c5deccf15868da16d89dc67c4ab0c6aa0d19"
         },
-        "beneficiary": "0x00494640aa3b47ba667a8cdf06138f56b420f9a7",
+        "beneficiary": "0x04dd4184424c2767d2bdb44725648eee2df31fc2",
         "billings": {
-            "free": "0xf91c915a90afb7e8dea2a921a9322b68d6da7357",
-            "times": "0x51c082c3ec7acd9af85a583586e69bcccd5e60ad",
-            "interval": "0x22312bbdaa487e7fab0072add6bc9fbb49a991da"
+            "free": "0xf46b4894cf5018a3a00104f390408ca7e2e63951",
+            "times": "0xa99782d73844729822603bf1a7574389dd1427fc",
+            "interval": "0x7d3af379fd9eed882051e561fdfc62dec9076d19"
         }
     }
 }

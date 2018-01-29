@@ -37,7 +37,7 @@ contract DbotBilling is BillingBasic, Ownable {
     uint256 arg1;
 
     event Billing(uint256 _callID, uint256 _gas, address _from);
-    event GetPrice(uint256 _callID, uint256 _gas, address _from, uint256 _price);
+    event GetPrice(address _from, uint256 _price);
     event FreezeToken(uint256 _callID, uint256 _gas, address _from, uint256 _tokens);
     event DeductFee(uint256 _callID, uint256 _gas,address _from, uint256 _fee);
     event UnfreezeToken(uint256 _callID, uint256 _gas,address _from, uint256 _fee);
@@ -82,9 +82,9 @@ contract DbotBilling is BillingBasic, Ownable {
         if ( billingType == BillingType.Free ) {
             charge = new FreeCharge();
         } else if ( billingType == BillingType.Times ) {
-            charge = new TimesCharge(arg0, arg1);               //arg0:每次消费ATT数量  arg1:免费次数
+            charge = new TimesCharge(arg0, arg1);               //arg0:每次消费ATN数量  arg1:免费次数
         } else if ( billingType == BillingType.Interval ) {
-            charge = new IntervalCharge(arg0, arg1);            //arg0:每段时间消费ATT数量  arg1:分段类型
+            charge = new IntervalCharge(arg0, arg1);            //arg0:每段时间消费ATN数量  arg1:分段类型
         } else if ( billingType == BillingType.Other ) {
             revert();
         } else {
@@ -99,13 +99,13 @@ contract DbotBilling is BillingBasic, Ownable {
         returns (bool isSucc) 
     {
         isSucc = false;
+        uint256 _fee = getPrice(_from);
         orders[_callID] = Order({
             from : _from,
-            fee : 0,
+            fee : _fee,
             isFrezon : false,
             isPaid : false
         });
-        getPrice(_callID, _from);
         isSucc = freezeToken(_callID);
         if (!isSucc)
             revert();
@@ -113,16 +113,12 @@ contract DbotBilling is BillingBasic, Ownable {
         return isSucc;
     } 
 
-    function getPrice(uint256 _callID, address _from)
-        onlyController
-        called(_callID)
+    function getPrice(address _from)
         public
         returns (uint256 _fee)
     {
-        Order storage o = orders[_callID];
-        _fee = Charge(charge).getPrice(_callID, o.from);
-        o.fee = _fee;
-        GetPrice(_callID, msg.gas, msg.sender, _fee);
+        _fee = Charge(charge).getPrice(_from);
+        GetPrice(_from, _fee);
     }
 
     function freezeToken(uint256 _callID)

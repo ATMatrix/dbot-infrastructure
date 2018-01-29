@@ -19,7 +19,7 @@ contract TimesCharge is Charge, Ownable {
         freeTimes = _freeTimes;
     }
 
-    function getPrice(uint256, address _from) onlyOwner public returns (uint256) {
+    function getPrice(address _from) onlyOwner public returns (uint256) {
         if (freeTimes <= 0) {
           return amount;
         } else {

@@ -24,7 +24,7 @@ const equivalent = {
 
 let beneficiary = '';
 const billingType = 1;
-const arg0 = 99;
+const arg0 = 1;
 const arg1 = 0;
 const file = './scripts/blockchain.json'  
 
@@ -50,14 +50,15 @@ module.exports =  function(deployer, network, accounts) {
   //       contracts.biz = AIBusinessController.address;
   //       deployer.deploy(Consumer, AIBusinessController.address).then(function () {
   //         contracts.consumer = Consumer.address;
-  //         deployer.deploy(ATT).then(function () {
-  //           contracts.att = ATT.address;
-  //           deployer.deploy(DbotBilling,ATT.address,beneficiary,billingType,arg0,arg1).then(function(){
+  //         // deployer.deploy(ATT).then(function () {
+  //           // contracts.att = ATT.address;
+  //           contracts.att = '0xa649c2ba1fbf6984e934cea9dc6c7c2a7af379f7';
+  //           deployer.deploy(DbotBilling,contracts.att,beneficiary,billingType,arg0,arg1).then(function(){
   //             contracts.bill = DbotBilling.address;
   //             blockchain[env].contracts = contracts;
   //             fs.outputJsonSync(file, blockchain);
   //           });
-  //         });
+  //         // });
   //       });
   //     })
   //   })

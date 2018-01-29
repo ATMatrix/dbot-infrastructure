@@ -20,7 +20,7 @@ module.exports = {
       port: 4045,
       endpoint: 'http://118.31.18.101:4045',
       network_id: "*",       
-      gas: 4.6e6,
+      gas: 4600000,
       gasPrice: 0.02e12,
       from: "0x47d1ba802dca4c88871dc594249905c42b7d21b7",
       password: "123456",

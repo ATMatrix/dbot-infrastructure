@@ -5,7 +5,7 @@ import "./Charge.sol";
 
 contract FreeCharge is Charge, Ownable {
 
-    function getPrice(uint256, address) onlyOwner returns (uint256) {
+    function getPrice(address) onlyOwner returns (uint256) {
        return 0;
     }
 

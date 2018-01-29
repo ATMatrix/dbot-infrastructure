@@ -56,6 +56,20 @@ contract AIBusinessController {
         usingAI(proxy).__callback(_callID, _result);
     }
 
+    function getPrice(bytes32 _id, address _from) public returns (uint256 _fee) {
+        bytes4 _sigrRegister = bytes4(keccak256("getBillingAddr(bytes32)"));
+        address _registerAddr = registerAddr;
+        address _billingAddr;
+        uint8 _status = 0;
+        assembly {
+            mstore(0x0, _sigrRegister)
+            mstore(0x4, _id)
+            _status := call(3000000, _registerAddr, 0, 0x0, add(4,32), 0x0, 32)
+            _billingAddr := mload(0x00)
+        }
+        _fee = BillingBasic(_billingAddr).getPrice(_from);
+    }
+
     function callFundsFrozen(bytes32 _id, address _fromAddr, uint256 _callAIID, string _arg) public returns (bool frozenFlag, uint256 callID) {
         bytes4 _sigrRegister = bytes4(keccak256("getBillingAddr(bytes32)"));
         address _registerAddr = registerAddr;
